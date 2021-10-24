@@ -1,0 +1,321 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/home/alexander
+Pall_components
+Z0 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 256
+w1635109093
+Z3 d/home/alexander/Documents/unb/OAC/riscv
+Z4 8/home/alexander/Documents/unb/OAC/riscv/all_components.vhd
+Z5 F/home/alexander/Documents/unb/OAC/riscv/all_components.vhd
+l0
+L5 1
+VTQ;iRJUfKoTS[3]MSefWz1
+!s100 7IJi1Cc`gJc=a17BMfiaS3
+Z6 OV;C;2020.1;71
+32
+Z7 !s110 1635110822
+!i10b 1
+Z8 !s108 1635110822.000000
+Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/all_components.vhd|
+Z10 !s107 /home/alexander/Documents/unb/OAC/riscv/all_components.vhd|
+!i113 1
+Z11 o-work work -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
+Ectl_ula
+Z13 w1635109074
+R0
+R1
+R2
+!i122 260
+R3
+Z14 8/home/alexander/Documents/unb/OAC/riscv/control_ula.vhd
+Z15 F/home/alexander/Documents/unb/OAC/riscv/control_ula.vhd
+l0
+L5 1
+VEZa9I6Y0zJ0SdmHUo1M@F3
+!s100 olC1ec7O2AFSPd6M5S9JO0
+R6
+32
+R7
+!i10b 1
+R8
+Z16 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/control_ula.vhd|
+Z17 !s107 /home/alexander/Documents/unb/OAC/riscv/control_ula.vhd|
+!i113 1
+R11
+R12
+Actl_ula_arch
+R0
+R1
+R2
+DEx4 work 7 ctl_ula 0 22 EZa9I6Y0zJ0SdmHUo1M@F3
+!i122 260
+l15
+L14 23
+VBdlKgL_ECXR43g41o:WbK3
+!s100 S`[bjHh9><LnnFW:e>hP:3
+R6
+32
+R7
+!i10b 1
+R8
+R16
+R17
+!i113 1
+R11
+R12
+Ectl_ula_tb
+Z18 w1635110817
+Z19 DPx4 work 14 all_components 0 22 TQ;iRJUfKoTS[3]MSefWz1
+R0
+R1
+R2
+!i122 261
+R3
+Z20 8/home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd
+Z21 F/home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd
+l0
+L8 1
+VIfOi9BEm6?=1L9O6?RDjK2
+!s100 Um[f4;hAi3S9O5gEKF>h`0
+R6
+32
+R7
+!i10b 1
+R8
+Z22 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd|
+Z23 !s107 /home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd|
+!i113 1
+R11
+R12
+Atestbench
+R19
+R0
+R1
+R2
+Z24 DEx4 work 10 ctl_ula_tb 0 22 IfOi9BEm6?=1L9O6?RDjK2
+!i122 261
+l18
+Z25 L12 98
+VzmD;ZJ;oK8AcMPC9cDcI[0
+!s100 DSX1G7hS6=ol`N8XRCYam1
+R6
+32
+R7
+!i10b 1
+R8
+R22
+R23
+!i113 1
+R11
+R12
+Efetch_tb
+Z26 w1635105914
+R19
+R0
+R1
+R2
+!i122 259
+R3
+Z27 8/home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd
+Z28 F/home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd
+l0
+L8 1
+Ve<W3D1X;hQJz0hU:zz84z2
+!s100 3Zjm?hUe8QJC?6e?^hO2A1
+R6
+32
+R7
+!i10b 1
+R8
+Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd|
+Z30 !s107 /home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd|
+!i113 1
+R11
+R12
+Atestbench
+R19
+R0
+R1
+R2
+DEx4 work 8 fetch_tb 0 22 e<W3D1X;hQJz0hU:zz84z2
+!i122 259
+l24
+L12 69
+VCa5;4I]Z<zc:F9IKV2]EZ0
+!s100 @;b7`YjdTEiaeWfOUilZa2
+R6
+32
+R7
+!i10b 1
+R8
+R29
+R30
+!i113 1
+R11
+R12
+Epc
+Z31 w1635105031
+R0
+R1
+R2
+!i122 257
+R3
+Z32 8/home/alexander/Documents/unb/OAC/riscv/pc.vhd
+Z33 F/home/alexander/Documents/unb/OAC/riscv/pc.vhd
+l0
+L5 1
+VNnOS7i;aO=2iT2i:>_5HU3
+!s100 jlmK4Jo8Tm=<M0V;^JLFK0
+R6
+32
+R7
+!i10b 1
+R8
+Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/pc.vhd|
+Z35 !s107 /home/alexander/Documents/unb/OAC/riscv/pc.vhd|
+!i113 1
+R11
+R12
+Apc_arch
+R0
+R1
+R2
+DEx4 work 2 pc 0 22 NnOS7i;aO=2iT2i:>_5HU3
+!i122 257
+l15
+L14 9
+VmHgZ002WJOcgdPzjIkl>N2
+!s100 6d8R^`1aJF^2QhJX;F;V53
+R6
+32
+R7
+!i10b 1
+R8
+R34
+R35
+!i113 1
+R11
+R12
+Epc_tb
+Z36 w1635101701
+R19
+R0
+R1
+R2
+!i122 258
+R3
+Z37 8/home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd
+Z38 F/home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd
+l0
+L8 1
+V1NV7eDz2WU9S=<ib7ma<P2
+!s100 hVEO[oLKmhz^k4jIz17fO1
+R6
+32
+R7
+!i10b 1
+R8
+Z39 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd|
+Z40 !s107 /home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd|
+!i113 1
+R11
+R12
+Atestbench
+R19
+R0
+R1
+R2
+DEx4 work 5 pc_tb 0 22 1NV7eDz2WU9S=<ib7ma<P2
+!i122 258
+l21
+L12 53
+VMLMN^O@d;<ADE3UKom=SL3
+!s100 OL6glcS6UCCf]a<RS<THL3
+R6
+32
+R7
+!i10b 1
+R8
+R39
+R40
+!i113 1
+R11
+R12
+Priscv_components
+R0
+R1
+R2
+!i122 31
+w1635099047
+R3
+R4
+R5
+l0
+L5 1
+V`f0W2WkmXSY6h]floTE8E3
+!s100 Dz:LYfYLPX6`=hXaYPe=^0
+R6
+32
+!s110 1635099049
+!i10b 1
+!s108 1635099049.000000
+R9
+R10
+!i113 1
+R11
+R12
+Eularv
+Z41 w1635098787
+R0
+R1
+R2
+!i122 255
+R3
+Z42 8/home/alexander/Documents/unb/OAC/riscv/ula.vhd
+Z43 F/home/alexander/Documents/unb/OAC/riscv/ula.vhd
+l0
+L5 1
+Vb2oP4=Dz_`=`oRS:AKjOc1
+!s100 Sf^VQDadN4XJC6FKM2mH10
+R6
+32
+R7
+!i10b 1
+R8
+Z44 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/alexander/Documents/unb/OAC/riscv/ula.vhd|
+Z45 !s107 /home/alexander/Documents/unb/OAC/riscv/ula.vhd|
+!i113 1
+R11
+R12
+Aularv_arch
+R0
+R1
+R2
+DEx4 work 5 ularv 0 22 b2oP4=Dz_`=`oRS:AKjOc1
+!i122 255
+l18
+L15 28
+VM>QZ>Ke:T]i:AKTZG=f?W1
+!s100 Xh5XDI_c8U8j9]3JX@7i]0
+R6
+32
+R7
+!i10b 1
+R8
+R44
+R45
+!i113 1
+R11
+R12
