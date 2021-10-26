@@ -2,6 +2,7 @@
 work/**/*
 work/*
 transcript
-*.bak
+**/*.bak
 *.wlf
 *.vstf
+./*

@@ -1,62 +1,7 @@
-/home/alexander/Documents/unb/OAC/riscv/control_state_register.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/control_state_register.vhd
+/home/alexander/Documents/unb/OAC/riscv/riscv/fetch_tb.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/riscv/fetch_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity CTL_STATE_REGISTER
--- Compiling architecture CTL_STATE_REGISTER_arch of CTL_STATE_REGISTER
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/control.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/control.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity CTL
--- Compiling architecture CTL_arch of CTL
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/control_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/control_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package riscv_pkg
--- Compiling entity CTL_tb
--- Compiling architecture testbench of CTL_tb
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/control_ula.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/control_ula.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package riscv_pkg
--- Compiling entity CTL_ULA_tb
--- Compiling architecture testbench of CTL_ULA_tb
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/ula.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/ula.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity ulaRV
--- Compiling architecture ulaRV_arch of ulaRV
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/control_ula_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package riscv_pkg
--- Compiling entity CTL_ULA_tb
--- Compiling architecture testbench of CTL_ULA_tb
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/fetch_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/riscv/fetch_tb.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
@@ -64,26 +9,59 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package riscv_pkg
 -- Compiling entity fetch_tb
 -- Compiling architecture testbench of fetch_tb
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/pc.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/pc.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/pc/pc.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/pc/pc.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/pc/pc.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Compiling entity PC
 -- Compiling architecture PC_arch of PC
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/riscv_pkg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/riscv_pkg.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity CTL_STATE_REGISTER
+-- Compiling architecture CTL_STATE_REGISTER_arch of CTL_STATE_REGISTER
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity CTL
+-- Compiling architecture CTL_arch of CTL
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/riscv/riscv_pkg.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/riscv/riscv_pkg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/riscv/riscv_pkg.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Compiling package riscv_pkg
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/pc_tb.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/pc/pc_tb.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/pc/pc_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/pc/pc_tb.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
@@ -91,5 +69,57 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package riscv_pkg
 -- Compiling entity PC_tb
 -- Compiling architecture testbench of PC_tb
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_tb.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_tb.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity CTL_tb
+-- Compiling architecture testbench of CTL_tb
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity CTL_STATE_REGISTER_tb
+-- Compiling architecture testbench of CTL_STATE_REGISTER_tb
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity ulaRV
+-- Compiling architecture ulaRV_arch of ulaRV
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula.vhd {1 {vcom -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 20:06:02 on Oct 26,2021
+vcom -reportprogress 300 -work work -2002 -explicit /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity CTL_ULA_tb
+-- Compiling architecture testbench of CTL_ULA_tb
+End time: 20:06:02 on Oct 26,2021, Elapsed time: 0:00:00
 
 } {} {}}
