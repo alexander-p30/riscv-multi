@@ -9,7 +9,6 @@ entity fetch_tb is
 end fetch_tb;
 
 architecture testbench of fetch_tb is
-  constant T : time := 4 ns;
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 

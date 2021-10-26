@@ -10,8 +10,6 @@ entity CTL_ULA_tb is
 end CTL_ULA_tb;
 
 architecture testbench of CTL_ULA_tb is
-  constant T : time := 4 ns;
-
   signal ULAop, funct7 : std_logic_vector(6 downto 0) := (others => '0');
   signal funct3 : std_logic_vector(2 downto 0) := (others => '0');
   signal op : std_logic_vector(3 downto 0) := "0000";
