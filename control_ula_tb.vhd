@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 library work;
-use work.all_components.all;
+use work.riscv_pkg.all;
 
 entity CTL_ULA_tb is
   generic (WSIZE : natural := 32);

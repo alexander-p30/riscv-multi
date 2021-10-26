@@ -2,11 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-library work;
-use work.all_components.all;
+use work.riscv_pkg.all;
 
 entity PC_tb is
-  generic (WSIZE : natural := 32);
 end PC_tb;
 
 architecture testbench of PC_tb is

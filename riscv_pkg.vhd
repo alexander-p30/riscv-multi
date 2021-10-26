@@ -2,9 +2,23 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-package all_components is
+package riscv_pkg is
+  -- general values
+  constant WSIZE : natural := 32;
+  constant ZERO32 : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
+
+  -- instruction types
+  constant R_TYPE : std_logic_vector(6 downto 0) := "0110011";
+  constant B_TYPE : std_logic_vector(6 downto 0) := "1100011";
+  constant I_TYPE : std_logic_vector(6 downto 0) := "0010011";
+  constant I_2_TYPE : std_logic_vector(6 downto 0) := "0000011";
+  constant I_3_TYPE : std_logic_vector(6 downto 0) := "1100111";
+  constant J_TYPE : std_logic_vector(6 downto 0) := "1101111";
+  constant U_TYPE : std_logic_vector(6 downto 0) := "0110111";
+  constant S_TYPE : std_logic_vector(6 downto 0) := "0100011";
+
+  -- components
   component ulaRV is
-    generic (WSIZE : natural := 32);
     port (
       opcode : in std_logic_vector(3 downto 0);
       A, B : in std_logic_vector(WSIZE-1 downto 0);
@@ -14,7 +28,6 @@ package all_components is
   end component ulaRV;
 
   component PC is
-    generic (WSIZE : natural := 32);
     port (
       clk: in std_logic;
       we: in std_logic;
@@ -31,4 +44,4 @@ package all_components is
       op : out std_logic_vector(3 downto 0)
     );
   end component CTL_ULA;
-end package all_components;
+end package riscv_pkg;
