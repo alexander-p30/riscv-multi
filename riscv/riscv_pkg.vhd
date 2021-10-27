@@ -20,6 +20,30 @@ package riscv_pkg is
   constant S_TYPE : std_logic_vector(6 downto 0) := "0100011";
 
   -- components
+  component MUX2 is
+    port (
+      mux_A, mux_B : in std_logic_vector(WSIZE-1 downto 0);
+      sel : in std_logic;
+      mux_out : out std_logic_vector(WSIZE-1 downto 0)
+    );
+  end component MUX2;
+
+  component MUX3 is
+    port (
+      mux_A, mux_B, mux_C : in std_logic_vector(WSIZE-1 downto 0);
+      sel : in std_logic_vector(1 downto 0);
+      mux_out: out std_logic_vector(WSIZE-1 downto 0)
+    );
+  end component MUX3;
+
+  component MUX4 is
+    port (
+      mux_A, mux_B, mux_C, mux_D : in std_logic_vector(WSIZE-1 downto 0);
+      sel : in std_logic_vector(1 downto 0);
+      mux_out: out std_logic_vector(WSIZE-1 downto 0)
+    );
+  end component MUX4;
+
   component ulaRV is
     port (
       opcode : in std_logic_vector(3 downto 0);

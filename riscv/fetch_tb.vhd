@@ -13,15 +13,26 @@ architecture testbench of fetch_tb is
   signal ongoing_test: std_logic := '1';
 
   -- PC/PCBack
-  signal pc_we: std_logic := '1';
+  signal pc_we, pcb_we: std_logic := '1';
   signal pc_in, pc_out, pcb_out: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
 
   -- ULA
   signal ula_A : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal ula_Z : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
+
+  -- CTL
+  signal opcode : std_logic_vector(6 downto 0);
+  signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+  signal LeMem : std_logic;
+  signal EscreveIR : std_logic;
+  signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
+  signal ULAop : std_logic_vector(3 downto 0);
+  signal current_state : std_logic_vector(2 downto 0);
+  signal next_state : std_logic_vector(2 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   pc_in <= ula_Z;
+  pcb_we <= '1';
 
   e_pc: PC port map(
     clk => clk,
@@ -32,7 +43,7 @@ begin
 
   e_pcb: PC port map(
     clk => clk,
-    we => '1',
+    we => pcb_we,
     pc_in => pc_out,
     pc_out => pcb_out
   );
@@ -44,6 +55,21 @@ begin
     Z => ula_Z,
     cond => open
   );
+
+  e_ctl: CTL port map(
+      opcode => opcode,
+      EscrevePCB => EscrevePCB,
+      EscrevePC => EscrevePC,
+      IouD => IouD,
+      OrigPC => OrigPC,
+      LeMem => LeMem,
+      EscreveIR => EscreveIR,
+      OrigULA_A => OrigULA_A,
+      OrigULA_B => OrigULA_B,
+      ULAop => ULAop,
+      current_state => current_state,
+      next_state => next_state
+   );
 
   process is
   begin
