@@ -2,6 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+use work.riscv_pkg.all;
+
 entity CTL is
   port (
     opcode : in std_logic_vector(6 downto 0);
@@ -15,7 +17,7 @@ entity CTL is
 
     -- ULA
     OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
-    ULAop : out std_logic_vector(3 downto 0);
+    ULAop : out std_logic_vector(6 downto 0);
 
     -- state-machine
     current_state : in std_logic_vector(2 downto 0) := "000";
@@ -26,7 +28,7 @@ end entity CTL;
 architecture CTL_arch of CTL is
   procedure fetch(
     signal EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem : out std_logic;
-    signal ULAop : out std_logic_vector(3 downto 0);
+    signal ULAop : out std_logic_vector(6 downto 0);
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
   ) is
@@ -36,7 +38,7 @@ architecture CTL_arch of CTL is
     EscreveIR <= '1';
     OrigULA_A <= "01";
     OrigULA_B <= "01";
-    ULAop <= "0000";
+    ULAop <= R_TYPE;
     OrigPC <= '0';
     EscrevePC <= '1';
     EscrevePCB <= '1';

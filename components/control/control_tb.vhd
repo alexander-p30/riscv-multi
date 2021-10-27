@@ -13,7 +13,7 @@ architecture testbench of CTL_tb is
     signal LeMem : std_logic;
     signal EscreveIR : std_logic;
     signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
-    signal ULAop : std_logic_vector(3 downto 0);
+    signal ULAop : std_logic_vector(6 downto 0);
     signal current_state : std_logic_vector(2 downto 0) := "000";
     signal next_state : std_logic_vector(2 downto 0) := "000";
 begin
@@ -42,7 +42,7 @@ begin
     assert(EscreveIR = '1') report "===========ERROR FETCH (D)===========" severity error;
     assert(OrigULA_A = "01") report "===========ERROR FETCH (E)===========" severity error;
     assert(OrigULA_B = "01") report "===========ERROR FETCH (F)===========" severity error;
-    assert(ULAop = "0000") report "===========ERROR FETCH (G)===========" severity error;
+    assert(ULAop = R_TYPE) report "===========ERROR FETCH (G)===========" severity error;
     assert(OrigPC = '0') report "===========ERROR FETCH (H)===========" severity error;
     assert(EscrevePC = '1') report "===========ERROR FETCH (I)===========" severity error;
     assert(EscrevePCB = '1') report "===========ERROR FETCH (J)===========" severity error;

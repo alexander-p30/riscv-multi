@@ -69,7 +69,7 @@ package riscv_pkg is
       LeMem : out std_logic;
       EscreveIR : out std_logic;
       OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
-      ULAop : out std_logic_vector(3 downto 0);
+      ULAop : out std_logic_vector(6 downto 0);
       current_state : in std_logic_vector(2 downto 0);
       next_state : out std_logic_vector(2 downto 0)
     );

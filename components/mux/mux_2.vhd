@@ -8,7 +8,7 @@ entity MUX2 is
   port (
     mux_A, mux_B : in std_logic_vector(WSIZE-1 downto 0);
     sel : in std_logic;
-    mux_out: out std_logic_vector(WSIZE-1 downto 0)
+    mux_out: out std_logic_vector(WSIZE-1 downto 0) := ZERO32
   );
 end entity MUX2;
 
