@@ -21,7 +21,7 @@ entity CTL is
 
     -- state-machine
     current_state : in std_logic_vector(2 downto 0) := "000";
-    next_state : out std_logic_vector(2 downto 0) := "000"
+    next_state : out std_logic_vector(2 downto 0)
   );
 end entity CTL;
 

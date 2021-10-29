@@ -20,6 +20,15 @@ package riscv_pkg is
   constant S_TYPE : std_logic_vector(6 downto 0) := "0100011";
 
   -- components
+  component GENERIC_REG is
+    port (
+      clk: in std_logic;
+      we: in std_logic;
+      reg_in: in std_logic_vector(31 downto 0);
+      reg_out: out std_logic_vector(31 downto 0)
+    );
+  end component GENERIC_REG;
+
   component MUX2 is
     port (
       mux_A, mux_B : in std_logic_vector(WSIZE-1 downto 0);
@@ -43,6 +52,16 @@ package riscv_pkg is
       mux_out: out std_logic_vector(WSIZE-1 downto 0)
     );
   end component MUX4;
+
+  component MEM_RV is
+    port (
+      clk : in std_logic;
+      we : in std_logic;
+      address : in std_logic_vector;
+      datain : in std_logic_vector;
+      dataout : out std_logic_vector
+    );
+  end component MEM_RV;
 
   component ulaRV is
     port (

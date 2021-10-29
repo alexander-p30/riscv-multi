@@ -12,6 +12,9 @@ architecture testbench of fetch_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 
+  -- IR
+  signal ir_out : std_logic_vector(WSIZE-1 downto 0);
+
   -- PC/PCBack
   signal pc_we, pcb_we: std_logic := '1';
   signal pc_in: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
@@ -33,9 +36,24 @@ architecture testbench of fetch_tb is
 
   -- CTL_ULA
   signal ctl_ula_op : std_logic_vector(3 downto 0);
+
+  -- MEM
+  signal x_mem_address : std_logic_vector(WSIZE-1 downto 0);
+  signal mem_we : std_logic;
+  signal mem_address : std_logic_vector(10 downto 0);
+  signal mem_datain : std_logic_vector(WSIZE-1 downto 0);
+  signal mem_dataout : std_logic_vector(WSIZE-1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
-  next_state <= "000";
+  mem_address <= x_mem_address(10 downto 0);
+  mem_we <= not LeMem;
+
+  e_reg: GENERIC_REG port map(
+    clk => clk,
+    we => EscreveIR,
+    reg_in => mem_dataout,
+    reg_out => ir_out
+  );
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
@@ -83,6 +101,13 @@ begin
     mux_out => ula_B
   );
 
+  mux_mem : MUX2 port map(
+    mux_A => pc_out,
+    mux_B => ula_Z,
+    sel => IouD,
+    mux_out => x_mem_address
+  );
+
   e_ctl: CTL port map(
       opcode => opcode,
       EscrevePCB => EscrevePCB,
@@ -95,8 +120,14 @@ begin
       OrigULA_B => OrigULA_B,
       ULAop => ULAop,
       current_state => current_state,
-      next_state => open
+      next_state => next_state
    );
+
+  e_ctl_state_register: CTL_STATE_REGISTER port map(
+    clk => clk,
+    state_in => next_state,
+    state_out => open
+  );
 
   e_ctl_ula : CTL_ULA port map(
       ULAop => ULAop,
@@ -105,26 +136,41 @@ begin
       op => ctl_ula_op
     );
 
+  e_mem: MEM_RV port map(
+    clk => clk,
+    we => mem_we,
+    address => mem_address,
+    datain => mem_datain,
+    dataout => mem_dataout
+  );
+
   process is
   begin
     wait for T/4;
     assert(ula_Z = x"00000004") report "!===========ERROR FETCH (A)===========!" severity error;
     assert(pc_out = x"00000000") report "!===========ERROR FETCH (B)===========!" severity error;
+    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for 3*T/4;
 
     assert(ula_Z = x"00000008") report "!===========ERROR FETCH (C)===========!" severity error;
     assert(pc_out = x"00000004") report "!===========ERROR FETCH (D)===========!" severity error;
     assert(pcb_out = x"00000000") report "!===========ERROR FETCH (E)===========!" severity error;
+    assert(ir_out = x"fafef1f0") report "!===========ERROR IR (E)===========!" severity error;
+    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     assert(ula_Z = x"0000000C") report "!===========ERROR FETCH (F)===========!" severity error;
     assert(pc_out = x"00000008") report "!===========ERROR FETCH (G)===========!" severity error;
     assert(pcb_out = x"00000004") report "!===========ERROR FETCH (H)===========!" severity error;
+    assert(ir_out = x"000a0009") report "!===========ERROR IR (H)===========!" severity error;
+    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     assert(ula_Z = x"00000010") report "!===========ERROR FETCH (I)===========!" severity error;
     assert(pc_out = x"0000000C") report "!===========ERROR FETCH (J)===========!" severity error;
     assert(pcb_out = x"00000008") report "!===========ERROR FETCH (K)===========!" severity error;
+    assert(ir_out = x"74736554") report "!===========ERROR IR (K)===========!" severity error;
+    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     ongoing_test <= '0';
