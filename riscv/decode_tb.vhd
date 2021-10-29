@@ -4,15 +4,12 @@ use ieee.numeric_std.all;
 
 use work.riscv_pkg.all;
 
-entity fetch_tb is
-end fetch_tb;
+entity decode_tb is
+end decode_tb;
 
-architecture testbench of fetch_tb is
+architecture testbench of decode_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
-
-  -- IR
-  signal ir_out : std_logic_vector(WSIZE-1 downto 0);
 
   -- PC/PCBack
   signal pc_we, pcb_we: std_logic := '1';
@@ -35,24 +32,8 @@ architecture testbench of fetch_tb is
 
   -- CTL_ULA
   signal ctl_ula_op : std_logic_vector(3 downto 0);
-
-  -- MEM
-  signal x_mem_address : std_logic_vector(WSIZE-1 downto 0);
-  signal mem_we : std_logic;
-  signal mem_address : std_logic_vector(10 downto 0);
-  signal mem_datain : std_logic_vector(WSIZE-1 downto 0);
-  signal mem_dataout : std_logic_vector(WSIZE-1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
-  mem_address <= x_mem_address(10 downto 0);
-  mem_we <= not LeMem;
-
-  e_reg: GENERIC_REG port map(
-    clk => clk,
-    we => EscreveIR,
-    reg_in => mem_dataout,
-    reg_out => ir_out
-  );
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
@@ -100,13 +81,6 @@ begin
     mux_out => ula_B
   );
 
-  mux_mem : MUX2 port map(
-    mux_A => pc_out,
-    mux_B => ula_Z,
-    sel => IouD,
-    mux_out => x_mem_address
-  );
-
   e_ctl: CTL port map(
       opcode => opcode,
       EscrevePCB => EscrevePCB,
@@ -135,12 +109,9 @@ begin
       op => ctl_ula_op
     );
 
-  e_mem: MEM_RV port map(
-    clk => clk,
-    we => mem_we,
-    address => mem_address,
-    datain => mem_datain,
-    dataout => mem_dataout
+  e_gen_imm : genImm32 port map(
+    instr: in std_logic_vector(WSIZE-1 downto 0);
+    imm32: out signed(WSIZE-1 downto 0)
   );
 
   process is

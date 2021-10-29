@@ -45,22 +45,42 @@ architecture CTL_arch of CTL is
     next_state <= "001";
   end fetch;
 
+  procedure decode(
+    signal ULAop : out std_logic_vector(6 downto 0);
+    signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    OrigULA_A <= "10";
+    OrigULA_B <= "11";
+    ULAop <= R_TYPE;
+    next_state <= "010";
+  end decode;
+
 begin
   process(current_state) is
   begin
     case current_state is
       when "000" =>
         fetch(
-        EscrevePCB => EscrevePCB,
-        EscrevePC => EscrevePC,
-        EscreveIR => EscreveIR,
-        IouD => IouD,
-        OrigPC => OrigPC,
-        LeMem => LeMem,
-        ULAop => ULAop,
-        OrigULA_A => OrigULA_A,
-        OrigULA_B => OrigULA_B,
-        next_state => next_state);
+          EscrevePCB => EscrevePCB,
+          EscrevePC => EscrevePC,
+          EscreveIR => EscreveIR,
+          IouD => IouD,
+          OrigPC => OrigPC,
+          LeMem => LeMem,
+          ULAop => ULAop,
+          OrigULA_A => OrigULA_A,
+          OrigULA_B => OrigULA_B,
+          next_state => next_state
+        );
+      when "001" =>
+        decode(
+          ULAop => ULAop,
+          OrigULA_A => OrigULA_A,
+          OrigULA_B => OrigULA_B,
+          next_state => next_state
+        );
       when others => NULL;
      -- when "001" => decode();
      -- when "010" => do();

@@ -63,6 +63,22 @@ package riscv_pkg is
     );
   end component MEM_RV;
 
+  component XREGS is
+    port (
+      clk, wren, rst : in std_logic;
+      rs1, rs2, rd : in std_logic_vector(4 downto 0);
+      data : in std_logic_vector(WSIZE-1 downto 0);
+      ro1, ro2 : out std_logic_vector(WSIZE-1 downto 0)
+      );
+  end component XREGS;
+
+  component genImm32 is
+    port(
+          instr: in std_logic_vector(WSIZE-1 downto 0);
+          imm32: out signed(WSIZE-1 downto 0)
+        );
+  end component genImm32;
+
   component ulaRV is
     port (
       opcode : in std_logic_vector(3 downto 0);

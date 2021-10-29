@@ -6,7 +6,7 @@ entity CTL_STATE_REGISTER is
   port (
     clk : in std_logic;
     state_in : in std_logic_vector(2 downto 0);
-    state_out : out std_logic_vector(2 downto 0)
+    state_out : out std_logic_vector(2 downto 0) := "000"
   );
 end entity CTL_STATE_REGISTER;
 

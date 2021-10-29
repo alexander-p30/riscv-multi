@@ -2,13 +2,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-library work;
 use work.riscv_pkg.all;
 
 entity CTL_tb is
 end CTL_tb;
 
 architecture testbench of CTL_tb is
+    signal clk : std_logic := '0';
+    signal ongoing_test : std_logic := '1';
+
     signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
     signal LeMem : std_logic;
     signal EscreveIR : std_logic;
@@ -17,6 +19,7 @@ architecture testbench of CTL_tb is
     signal current_state : std_logic_vector(2 downto 0) := "000";
     signal next_state : std_logic_vector(2 downto 0) := "000";
 begin
+  clk <= not clk after T/2 when ongoing_test = '1' else '0';
   e_ctl: CTL port map(
     opcode => "0000000",
     EscrevePCB => EscrevePCB,
@@ -32,10 +35,16 @@ begin
     next_state => next_state
   );
 
+  e_ctl_state_reg : CTL_STATE_REGISTER port map(
+      clk => clk,
+      state_in => next_state,
+      state_out => current_state
+    );
+
   process is
   begin
-    wait for T;
-
+    wait for T/4;
+    assert(current_state = "000") report "==========ERROR FETCH (0)==========" severity error;
     assert(next_state = "001") report "==========ERROR FETCH (A)==========" severity error;
     assert(IouD = '0') report "===========ERROR FETCH (B)===========" severity error;
     assert(LeMem = '1') report "===========ERROR FETCH (C)===========" severity error;
@@ -46,7 +55,16 @@ begin
     assert(OrigPC = '0') report "===========ERROR FETCH (H)===========" severity error;
     assert(EscrevePC = '1') report "===========ERROR FETCH (I)===========" severity error;
     assert(EscrevePCB = '1') report "===========ERROR FETCH (J)===========" severity error;
+    wait for T;
 
+    assert(current_state = "001") report "==========ERROR DECODE (0)==========" severity error;
+    assert(next_state = "010") report "==========ERROR DECODE (A)==========" severity error;
+    assert(OrigULA_A = "10") report "===========ERROR DECODE (E)===========" severity error;
+    assert(OrigULA_B = "11") report "===========ERROR DECODE (F)===========" severity error;
+    assert(ULAop = R_TYPE) report "===========ERROR DECODE (G)===========" severity error;
+    wait for T;
+
+    ongoing_test <= '0';
     wait;
   end process;
 end architecture;
