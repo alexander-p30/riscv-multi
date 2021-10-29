@@ -8,6 +8,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity MUX2
 -- Compiling architecture MUX2_arch of MUX2
 
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd {1 {vcom -work work -2008 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity CTL_STATE_REGISTER
+-- Compiling architecture CTL_STATE_REGISTER_arch of CTL_STATE_REGISTER
+
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mem/mem.vhd {1 {vcom -work work -2008 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mem/mem.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -28,24 +37,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity MUX3
 -- Compiling architecture MUX3_arch of MUX3
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd {1 {vcom -work work -2008 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity CTL_STATE_REGISTER
--- Compiling architecture CTL_STATE_REGISTER_arch of CTL_STATE_REGISTER
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/xregs/xregs_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/xregs/xregs_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Loading package riscv_pkg
--- Compiling entity MUX4
--- Compiling architecture MUX4_arch of MUX4
+-- Compiling entity XREGS_tb
+-- Compiling architecture TB of XREGS_tb
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -57,6 +57,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity CTL_tb
 -- Compiling architecture testbench of CTL_tb
 
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity MUX4
+-- Compiling architecture MUX4_arch of MUX4
+
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/ula_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/ula_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -67,15 +77,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity ula_tb
 -- Compiling architecture tb_arch of ula_tb
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_2_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_2_tb.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/xregs/xregs.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/xregs/xregs.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Loading package riscv_pkg
--- Compiling entity MUX2_tb
--- Compiling architecture testbench of MUX2_tb
+-- Compiling entity XREGS
+-- Compiling architecture XREGS_arch of XREGS
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -87,6 +97,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity CTL
 -- Compiling architecture CTL_arch of CTL
 
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_2_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_2_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity MUX2_tb
+-- Compiling architecture testbench of MUX2_tb
+
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/pc/pc_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/pc/pc_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -96,6 +116,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package riscv_pkg
 -- Compiling entity PC_tb
 -- Compiling architecture testbench of PC_tb
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity ulaRV
+-- Compiling architecture ulaRV_arch of ulaRV
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_4_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -107,14 +136,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity MUX4_tb
 -- Compiling architecture testbench of MUX4_tb
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/ula.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/gen_imm/gen_imm_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/gen_imm/gen_imm_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
--- Compiling entity ulaRV
--- Compiling architecture ulaRV_arch of ulaRV
+-- Compiling entity gen_imm_tb
+-- Compiling architecture tb of gen_imm_tb
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/pc/pc.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/pc/pc.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -125,25 +154,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity PC
 -- Compiling architecture PC_arch of PC
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/reg/reg_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/reg/reg_tb.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/gen_imm/gen_imm.vhd {2 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/gen_imm/gen_imm.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Loading package riscv_pkg
--- Compiling entity GENERIC_REG_tb
--- Compiling architecture testbench of GENERIC_REG_tb
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package riscv_pkg
--- Compiling entity CTL_ULA_tb
--- Compiling architecture testbench of CTL_ULA_tb
+-- Compiling entity genImm32
+-- Compiling architecture genImm32_arch of genImm32
+** Warning: /home/alexander/Documents/unb/OAC/riscv/components/gen_imm/gen_imm.vhd(26): (vcom-1014) Array type case expression must be of a locally static subtype.
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/riscv/fetch_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/riscv/fetch_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -155,6 +175,26 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity fetch_tb
 -- Compiling architecture testbench of fetch_tb
 
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity CTL_ULA_tb
+-- Compiling architecture testbench of CTL_ULA_tb
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/reg/reg_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/reg/reg_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity GENERIC_REG_tb
+-- Compiling architecture testbench of GENERIC_REG_tb
+
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/riscv/riscv_pkg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/riscv/riscv_pkg.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -162,16 +202,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Compiling package riscv_pkg
-
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package riscv_pkg
--- Compiling entity CTL_STATE_REGISTER_tb
--- Compiling architecture testbench of CTL_STATE_REGISTER_tb
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_3_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mux/mux_3_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -183,15 +213,25 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity MUX3_tb
 -- Compiling architecture testbench of MUX3_tb
 
-} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/reg/reg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/reg/reg.vhd
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/control/control_state_register_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
 -- Loading package riscv_pkg
--- Compiling entity GENERIC_REG
--- Compiling architecture RTL of GENERIC_REG
+-- Compiling entity CTL_STATE_REGISTER_tb
+-- Compiling architecture testbench of CTL_STATE_REGISTER_tb
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/mem/mem_tb.vhd {1 {vcom -work work -2008 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/mem/mem_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity MEM_RV_tb
+-- Compiling architecture testbench of MEM_RV_tb
 
 } {} {}} /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/ula/control_ula.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -202,5 +242,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package riscv_pkg
 -- Compiling entity CTL_ULA
 -- Compiling architecture CTL_ULA_arch of CTL_ULA
+
+} {} {}} /home/alexander/Documents/unb/OAC/riscv/components/reg/reg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/alexander/Documents/unb/OAC/riscv/components/reg/reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package riscv_pkg
+-- Compiling entity GENERIC_REG
+-- Compiling architecture RTL of GENERIC_REG
 
 } {} {}}

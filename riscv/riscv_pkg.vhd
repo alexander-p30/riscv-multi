@@ -24,8 +24,8 @@ package riscv_pkg is
     port (
       clk: in std_logic;
       we: in std_logic;
-      reg_in: in std_logic_vector(31 downto 0);
-      reg_out: out std_logic_vector(31 downto 0)
+      reg_in: in std_logic_vector(WSIZE-1 downto 0);
+      reg_out: out std_logic_vector(WSIZE-1 downto 0)
     );
   end component GENERIC_REG;
 

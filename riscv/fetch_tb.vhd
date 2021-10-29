@@ -27,7 +27,7 @@ architecture testbench of fetch_tb is
   signal opcode : std_logic_vector(6 downto 0) := R_TYPE;
   signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
   signal LeMem : std_logic;
-  signal EscreveIR : std_logic;
+  signal EscreveIR : std_logic := '1';
   signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
   signal ULAop : std_logic_vector(6 downto 0);
   signal current_state : std_logic_vector(2 downto 0) := "000";

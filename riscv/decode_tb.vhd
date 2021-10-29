@@ -11,6 +11,10 @@ architecture testbench of decode_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 
+  -- IR
+  signal ir_out : std_logic_vector(WSIZE-1 downto 0);
+  signal ir_in : std_logic_vector(WSIZE-1 downto 0) := "111111111111" & "01010" & "000" & "10101" & "0010011";
+
   -- PC/PCBack
   signal pc_we, pcb_we: std_logic := '1';
   signal pc_in: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
@@ -32,12 +36,33 @@ architecture testbench of decode_tb is
 
   -- CTL_ULA
   signal ctl_ula_op : std_logic_vector(3 downto 0);
+
+  -- genImm
+  signal gen_imm_out : signed(WSIZE-1 downto 0);
+  signal aux_gen_imm_out : std_logic_vector(WSIZE-1 downto 0);
+
+  -- XREGS
+  signal xregs_out_A, xregs_out_B : std_logic_vector(WSIZE-1 downto 0);
+
+  -- XREGS regs
+  signal reg_A_out, reg_B_out : std_logic_vector(WSIZE-1 downto 0);
+
+  -- ULA reg
+  signal reg_ULA_Z_out : std_logic_vector(WSIZE-1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
+  aux_gen_imm_out <= std_logic_vector(signed(gen_imm_out) sll 1);
+
+  e_reg: GENERIC_REG port map(
+    clk => clk,
+    we => EscreveIR,
+    reg_in => ir_in,
+    reg_out => ir_out
+  );
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
-    mux_B => x"FFFFFFFF",
+    mux_B => reg_ULA_Z_out,
     sel => OrigPC,
     mux_out => pc_in
   );
@@ -65,18 +90,18 @@ begin
   );
 
   mux_ula_a : MUX3 port map(
-    mux_A => x"FFFFFFFF",
+    mux_A => reg_A_out,
     mux_B => pc_out,
-    mux_C => x"FFFFFFFF",
+    mux_C => pcb_out,
     sel => OrigULA_A,
     mux_out => ula_A
   );
 
   mux_ula_b : MUX4 port map(
-    mux_A => x"FFFFFFFF",
+    mux_A => reg_B_out,
     mux_B => std_logic_vector(to_unsigned(4, 32)),
-    mux_C => x"FFFFFFFF",
-    mux_D => x"FFFFFFFF",
+    mux_C => std_logic_vector(gen_imm_out),
+    mux_D => aux_gen_imm_out,
     sel => OrigULA_B,
     mux_out => ula_B
   );
@@ -99,7 +124,7 @@ begin
   e_ctl_state_register: CTL_STATE_REGISTER port map(
     clk => clk,
     state_in => next_state,
-    state_out => open
+    state_out => current_state
   );
 
   e_ctl_ula : CTL_ULA port map(
@@ -110,37 +135,55 @@ begin
     );
 
   e_gen_imm : genImm32 port map(
-    instr: in std_logic_vector(WSIZE-1 downto 0);
-    imm32: out signed(WSIZE-1 downto 0)
+    instr => ir_out,
+    imm32 => gen_imm_out
   );
+
+  e_xregs : XREGS port map (
+    clk => clk,
+    wren => '0',
+    rst => '0',
+    rs1 => ir_out(19 downto 15),
+    rs2 => ir_out(24 downto 20),
+    rd => ir_out(11 downto 7),
+    data => ZERO32,
+    ro1 => xregs_out_A,
+    ro2 => xregs_out_B
+  );
+
+  reg_A : GENERIC_REG port map (
+      clk => clk,
+      we => '1',
+      reg_in => xregs_out_A,
+      reg_out => reg_A_out
+   );
+
+  reg_B : GENERIC_REG port map (
+      clk => clk,
+      we => '1',
+      reg_in => xregs_out_B,
+      reg_out => reg_B_out
+   );
+
+  reg_ULA_Z : GENERIC_REG port map (
+      clk => clk,
+      we => '1',
+      reg_in => ula_Z,
+      reg_out => reg_ULA_Z_out
+   );
 
   process is
   begin
-    wait for T/4;
-    assert(ula_Z = x"00000004") report "!===========ERROR FETCH (A)===========!" severity error;
-    assert(pc_out = x"00000000") report "!===========ERROR FETCH (B)===========!" severity error;
-    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
-    wait for 3*T/4;
-
-    assert(ula_Z = x"00000008") report "!===========ERROR FETCH (C)===========!" severity error;
-    assert(pc_out = x"00000004") report "!===========ERROR FETCH (D)===========!" severity error;
-    assert(pcb_out = x"00000000") report "!===========ERROR FETCH (E)===========!" severity error;
-    assert(ir_out = x"fafef1f0") report "!===========ERROR IR (E)===========!" severity error;
-    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
-    assert(ula_Z = x"0000000C") report "!===========ERROR FETCH (F)===========!" severity error;
-    assert(pc_out = x"00000008") report "!===========ERROR FETCH (G)===========!" severity error;
-    assert(pcb_out = x"00000004") report "!===========ERROR FETCH (H)===========!" severity error;
-    assert(ir_out = x"000a0009") report "!===========ERROR IR (H)===========!" severity error;
-    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
-    wait for T;
+    assert(gen_imm_out = x"FFFFFFFF") report "!===========ERROR DECODE (1)===========!" severity error;
+    assert(ir_out = "111111111111" & "01010" & "000" & "10101" & "0010011") report "!===========ERROR DECODE (2)===========!" severity error;
+    assert(aux_gen_imm_out = x"FFFFFFFE") report "!===========ERROR DECODE (3)===========!" severity error;
+    assert(ula_A = x"00000000") report "!===========ERROR DECODE (4)===========!" severity error;
+    assert(ula_B = x"FFFFFFFE") report "!===========ERROR DECODE (5)===========!" severity error;
+    assert(ula_Z = x"FFFFFFFE") report "!===========ERROR DECODE (6)===========!" severity error;
+    assert(next_state = "010") report "!===========ERROR DECODE (NEXT_STATE)===========!" severity error;
 
-    assert(ula_Z = x"00000010") report "!===========ERROR FETCH (I)===========!" severity error;
-    assert(pc_out = x"0000000C") report "!===========ERROR FETCH (J)===========!" severity error;
-    assert(pcb_out = x"00000008") report "!===========ERROR FETCH (K)===========!" severity error;
-    assert(ir_out = x"74736554") report "!===========ERROR IR (K)===========!" severity error;
-    assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     ongoing_test <= '0';
