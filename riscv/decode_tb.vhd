@@ -26,7 +26,7 @@ architecture testbench of decode_tb is
 
   -- CTL
   signal opcode : std_logic_vector(6 downto 0) := R_TYPE;
-  signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+  signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
   signal LeMem : std_logic;
   signal EscreveIR : std_logic;
   signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
@@ -108,6 +108,7 @@ begin
 
   e_ctl: CTL port map(
       opcode => opcode,
+      EscreveMEM => EscreveMEM,
       EscrevePCB => EscrevePCB,
       EscrevePC => EscrevePC,
       IouD => IouD,

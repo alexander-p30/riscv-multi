@@ -16,6 +16,7 @@ entity CTL is
     EscreveReg : out std_logic;
 
     -- MEM/IR
+    EscreveMEM : out std_logic;
     LeMem : out std_logic;
     EscreveIR : out std_logic;
 
@@ -31,7 +32,7 @@ end entity CTL;
 
 architecture CTL_arch of CTL is
   procedure fetch(
-    signal EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem, EscreveReg : out std_logic;
+    signal EscreveMEM, EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem, EscreveReg : out std_logic;
     signal ULAop : out std_logic_vector(6 downto 0);
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
@@ -39,6 +40,7 @@ architecture CTL_arch of CTL is
   begin
     IouD <= '0';
     LeMem <= '1';
+    EscreveMEM <= '0';
     EscreveIR <= '1';
     EscreveReg <= '0';
     OrigULA_A <= "01";
@@ -90,6 +92,18 @@ architecture CTL_arch of CTL is
     next_state <= STATE_3;
   end ex_I_type;
 
+  procedure ex_S_I2_type(
+    signal ULAop : out std_logic_vector(6 downto 0);
+    signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    OrigULA_A <= "00";
+    OrigULA_B <= "10";
+    ULAop <= opcode;
+    next_state <= STATE_3;
+  end ex_S_I2_type;
+
   procedure wb_RI_type(
     signal EscreveReg : out std_logic;
     signal Mem2Reg : out std_logic_vector(1 downto 0);
@@ -101,14 +115,45 @@ architecture CTL_arch of CTL is
     next_state <= STATE_0;
   end wb_RI_type;
 
+  procedure wb_S_I2_type(
+    signal EscreveMEM, LeMem, IouD : out std_logic;
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    case opcode is
+      when S_TYPE =>
+        EscreveMEM <= '1';
+        LeMem <= '0';
+        next_state <= STATE_0;
+      when I_2_TYPE =>
+        EscreveMEM <= '0';
+        LeMem <= '1';
+        next_state <= STATE_4;
+      when others =>
+        NULL;
+    end case;
+    IouD <= '1';
+  end wb_S_I2_type;
+
+  procedure wb_ls_2_reg(
+    signal EscreveReg : out std_logic;
+    signal Mem2Reg : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    EscreveReg <= '1';
+    Mem2Reg <= "10";
+    next_state <= STATE_0;
+  end wb_ls_2_reg;
 
 begin
   process(current_state) is
   begin
     case current_state is
-----------------------------------------------------------
+---------------------------------------------------------- fetch
       when STATE_0 =>
         fetch(
+          EscreveMEM => EscreveMEM,
           EscreveReg => EscreveReg,
           EscrevePCB => EscrevePCB,
           EscrevePC => EscrevePC,
@@ -121,7 +166,7 @@ begin
           OrigULA_B => OrigULA_B,
           next_state => next_state
         );
-----------------------------------------------------------
+---------------------------------------------------------- decode
       when STATE_1 =>
         decode(
           EscreveIR => EscreveIR,
@@ -132,7 +177,7 @@ begin
           OrigULA_B => OrigULA_B,
           next_state => next_state
         );
-----------------------------------------------------------
+---------------------------------------------------------- execute
       when STATE_2 =>
         case opcode is
           when R_TYPE =>
@@ -149,9 +194,16 @@ begin
               OrigULA_B => OrigULA_B,
               next_state => next_state
             );
+          when S_TYPE | I_2_TYPE =>
+            ex_S_I2_type(
+              ULAop => ULAop,
+              OrigULA_A => OrigULA_A,
+              OrigULA_B => OrigULA_B,
+              next_state => next_state
+            );
           when others => NULL;
         end case;
-----------------------------------------------------------
+---------------------------------------------------------- write-back
       when STATE_3 =>
         case opcode is
           when R_TYPE | I_TYPE =>
@@ -160,8 +212,22 @@ begin
               Mem2Reg => Mem2Reg,
               next_state => next_state
             );
+          when S_TYPE | I_2_TYPE =>
+            wb_S_I2_type(
+              EscreveMEM => EscreveMEM,
+              LeMem => LeMem,
+              IouD => IouD,
+              next_state => next_state
+            );
           when others => NULL;
         end case;
+---------------------------------------------------------- write-back lw
+      when STATE_4 =>
+        wb_ls_2_reg(
+          EscreveReg => EscreveReg,
+          Mem2Reg => Mem2Reg,
+          next_state => next_state
+        );
 ----------------------------------------------------------
       when others => NULL;
     end case;

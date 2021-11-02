@@ -11,7 +11,7 @@ architecture testbench of CTL_tb is
     signal clk : std_logic := '0';
     signal ongoing_test : std_logic := '1';
 
-    signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+    signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
     signal LeMem : std_logic;
     signal EscreveIR : std_logic;
     signal EscreveReg : std_logic;
@@ -24,6 +24,7 @@ begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   e_ctl: CTL port map(
     opcode => "0000000",
+    EscreveMEM => EscreveMEM,
     EscrevePCB => EscrevePCB,
     EscrevePC => EscrevePC,
     IouD => IouD,

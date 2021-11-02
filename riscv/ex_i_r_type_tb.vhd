@@ -29,7 +29,7 @@ architecture testbench of ex_i_r_type_tb is
 
   -- CTL
   signal opcode : std_logic_vector(6 downto 0);
-  signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+  signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
   signal LeMem : std_logic;
   signal EscreveIR : std_logic;
   signal EscreveReg : std_logic;
@@ -60,7 +60,6 @@ architecture testbench of ex_i_r_type_tb is
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   aux_gen_imm_out <= std_logic_vector(signed(gen_imm_out) sll 1);
-  mem_we <= not LeMem;
   opcode <= ir_out(6 downto 0);
 
   mux_pc : MUX2 port map(
@@ -100,7 +99,7 @@ begin
 
   e_mem : MEM_RV port map(
     clk => clk,
-    we => mem_we,
+    we => EscreveMEM,
     address => mem_address(10 downto 0),
     datain => reg_B_out,
     dataout => ir_in
@@ -133,6 +132,7 @@ begin
 
   e_ctl: CTL port map(
       opcode => opcode,
+      EscreveMEM => EscreveMEM,
       EscrevePCB => EscrevePCB,
       EscrevePC => EscrevePC,
       IouD => IouD,
