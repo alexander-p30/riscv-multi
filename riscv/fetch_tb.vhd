@@ -132,6 +132,7 @@ begin
 
   e_ctl_ula : CTL_ULA port map(
       ULAop => ULAop,
+      current_ctl_state => "000",
       funct3 => "000",
       funct7 => "0000000",
       op => ctl_ula_op
@@ -156,21 +157,21 @@ begin
     assert(ula_Z = x"00000008") report "!===========ERROR FETCH (C)===========!" severity error;
     assert(pc_out = x"00000004") report "!===========ERROR FETCH (D)===========!" severity error;
     assert(pcb_out = x"00000000") report "!===========ERROR FETCH (E)===========!" severity error;
-    assert(ir_out = x"FFF50A93") report "!===========ERROR IR (E)===========!" severity error;
+    assert(ir_out = x"19000293") report "!===========ERROR IR (E)===========!" severity error;
     assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     assert(ula_Z = x"0000000C") report "!===========ERROR FETCH (F)===========!" severity error;
     assert(pc_out = x"00000008") report "!===========ERROR FETCH (G)===========!" severity error;
     assert(pcb_out = x"00000004") report "!===========ERROR FETCH (H)===========!" severity error;
-    assert(ir_out = x"000a0009") report "!===========ERROR IR (H)===========!" severity error;
+    assert(ir_out = x"0ff00313") report "!===========ERROR IR (H)===========!" severity error;
     assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 
     assert(ula_Z = x"00000010") report "!===========ERROR FETCH (I)===========!" severity error;
     assert(pc_out = x"0000000C") report "!===========ERROR FETCH (J)===========!" severity error;
     assert(pcb_out = x"00000008") report "!===========ERROR FETCH (K)===========!" severity error;
-    assert(ir_out = x"74736554") report "!===========ERROR IR (K)===========!" severity error;
+    assert(ir_out = x"406283b3") report "!===========ERROR IR (K)===========!" severity error;
     assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 

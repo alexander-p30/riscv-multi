@@ -64,7 +64,6 @@ begin
     wait for 1 ns;
     assert(imm32_s=x"0000000C") report "!=============ERROR on UJ_Type 0=============!" severity error;
 
-    assert false report "Test done." severity note;
     wait;
   end process;
 end tb;

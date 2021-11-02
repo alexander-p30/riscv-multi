@@ -31,7 +31,7 @@ end entity CTL;
 
 architecture CTL_arch of CTL is
   procedure fetch(
-    signal EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem : out std_logic;
+    signal EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem, EscreveReg : out std_logic;
     signal ULAop : out std_logic_vector(6 downto 0);
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
@@ -40,6 +40,7 @@ architecture CTL_arch of CTL is
     IouD <= '0';
     LeMem <= '1';
     EscreveIR <= '1';
+    EscreveReg <= '0';
     OrigULA_A <= "01";
     OrigULA_B <= "01";
     ULAop <= R_TYPE;
@@ -89,19 +90,16 @@ architecture CTL_arch of CTL is
     next_state <= STATE_3;
   end ex_I_type;
 
-  -- procedure wb_R_type(
-  --   signal EscrevePCB, EscrevePC, EscreveIR : out std_logic;
-  --   signal next_state : out std_logic_vector(2 downto 0)
-  -- ) is
-  -- begin
-  --   OrigULA_A <= "00";
-  --   OrigULA_B <= "10";
-  --   EscrevePC <= '0';
-  --   EscrevePCB <= '0';
-  --   EscreveIR <= '0';
-  --   ULAop <= I_TYPE;
-  --   next_state <= STATE_3;
-  -- end ex_I_type;
+  procedure wb_RI_type(
+    signal EscreveReg : out std_logic;
+    signal Mem2Reg : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    EscreveReg <= '1';
+    Mem2Reg <= "00";
+    next_state <= STATE_0;
+  end wb_RI_type;
 
 
 begin
@@ -111,6 +109,7 @@ begin
 ----------------------------------------------------------
       when STATE_0 =>
         fetch(
+          EscreveReg => EscreveReg,
           EscrevePCB => EscrevePCB,
           EscrevePC => EscrevePC,
           EscreveIR => EscreveIR,
@@ -152,14 +151,17 @@ begin
             );
           when others => NULL;
         end case;
-        next_state <= STATE_0;
 ----------------------------------------------------------
-      -- when STATE_3 =>
-      --   case opcode is
-      --     when R_TYPE =>
-      --       wb_R_type(
-      --       );
-      --   end case;
+      when STATE_3 =>
+        case opcode is
+          when R_TYPE | I_TYPE =>
+            wb_RI_type(
+              EscreveReg => EscreveReg,
+              Mem2Reg => Mem2Reg,
+              next_state => next_state
+            );
+          when others => NULL;
+        end case;
 ----------------------------------------------------------
       when others => NULL;
     end case;

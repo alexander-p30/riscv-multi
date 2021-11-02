@@ -131,6 +131,7 @@ begin
 
   e_ctl_ula : CTL_ULA port map(
       ULAop => ULAop,
+      current_ctl_state => "000",
       funct3 => "000",
       funct7 => "0000000",
       op => ctl_ula_op

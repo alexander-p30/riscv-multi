@@ -130,6 +130,7 @@ package riscv_pkg is
   component CTL_ULA is
     port (
       ULAop : in std_logic_vector(6 downto 0);
+      current_ctl_state : in std_logic_vector(2 downto 0);
       funct3 : in std_logic_vector(2 downto 0);
       funct7 : in std_logic_vector(6 downto 0);
       op : out std_logic_vector(3 downto 0)
