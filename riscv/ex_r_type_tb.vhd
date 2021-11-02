@@ -4,10 +4,10 @@ use ieee.numeric_std.all;
 
 use work.riscv_pkg.all;
 
-entity decode_tb is
-end decode_tb;
+entity ex_r_type_tb is
+end ex_r_type_tb;
 
-architecture testbench of decode_tb is
+architecture testbench of ex_r_type_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 
@@ -20,6 +20,10 @@ architecture testbench of decode_tb is
   signal pc_in: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal pc_out, pcb_out: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
 
+  -- MEM
+  signal mem_we : std_logic;
+  signal mem_address : std_logic_vector(WSIZE-1 downto 0);
+
   -- ULA
   signal ula_A, ula_B : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal ula_Z : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
@@ -29,10 +33,12 @@ architecture testbench of decode_tb is
   signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
   signal LeMem : std_logic;
   signal EscreveIR : std_logic;
+  signal EscreveReg : std_logic;
   signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
   signal ULAop : std_logic_vector(6 downto 0);
   signal current_state : std_logic_vector(2 downto 0) := "000";
   signal next_state : std_logic_vector(2 downto 0);
+  signal Mem2Reg : std_logic_vector(1 downto 0);
 
   -- CTL_ULA
   signal ctl_ula_op : std_logic_vector(3 downto 0);
@@ -52,13 +58,7 @@ architecture testbench of decode_tb is
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   aux_gen_imm_out <= std_logic_vector(signed(gen_imm_out) sll 1);
-
-  e_reg: GENERIC_REG port map(
-    clk => clk,
-    we => EscreveIR,
-    reg_in => ir_in,
-    reg_out => ir_out
-  );
+  mem_we <= not LeMem;
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
@@ -79,6 +79,28 @@ begin
     we => EscrevePCB,
     pc_in => pc_out,
     pc_out => pcb_out
+  );
+
+  e_reg: GENERIC_REG port map(
+    clk => clk,
+    we => EscreveIR,
+    reg_in => ir_in,
+    reg_out => ir_out
+  );
+
+  mux_mem : MUX2 port map(
+    mux_A => pc_out,
+    mux_B => reg_ULA_Z_out,
+    sel => IouD,
+    mux_out => mem_address
+  );
+
+  e_mem : MEM_RV port map(
+    clk => clk,
+    we => mem_we,
+    address => mem_address(10 downto 0),
+    datain => reg_B_out,
+    dataout => ir_in
   );
 
   e_ula: ulaRV port map(
@@ -112,8 +134,8 @@ begin
       EscrevePC => EscrevePC,
       IouD => IouD,
       OrigPC => OrigPC,
-      Mem2Reg => open,
-      EscreveReg => open,
+      Mem2Reg => Mem2Reg,
+      EscreveReg => EscreveReg,
       LeMem => LeMem,
       EscreveIR => EscreveIR,
       OrigULA_A => OrigULA_A,
@@ -184,7 +206,13 @@ begin
     assert(ula_A = x"00000000") report "!===========ERROR DECODE (4)===========!" severity error;
     assert(ula_B = x"FFFFFFFE") report "!===========ERROR DECODE (5)===========!" severity error;
     assert(ula_Z = x"FFFFFFFE") report "!===========ERROR DECODE (6)===========!" severity error;
+    assert(reg_ULA_Z_out /= x"FFFFFFFE") report "!===========ERROR DECODE (7)===========!" severity error;
     assert(next_state = "010") report "!===========ERROR DECODE (NEXT_STATE)===========!" severity error;
+
+    wait for T;
+
+    assert(reg_ULA_Z_out = x"FFFFFFFE") report "!===========ERROR EX_R (1)===========!" severity error;
+    assert(next_state = "011") report "!===========ERROR EX_R (NEXT_STATE)===========!" severity error;
 
     wait for T;
 

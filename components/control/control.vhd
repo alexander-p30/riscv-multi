@@ -11,6 +11,10 @@ entity CTL is
     -- PC
     EscrevePCB, EscrevePC, IouD, OrigPC : out std_logic;
 
+    -- XREGS
+    Mem2Reg : out std_logic_vector(1 downto 0);
+    EscreveReg : out std_logic;
+
     -- MEM/IR
     LeMem : out std_logic;
     EscreveIR : out std_logic;
@@ -20,7 +24,7 @@ entity CTL is
     ULAop : out std_logic_vector(6 downto 0);
 
     -- state-machine
-    current_state : in std_logic_vector(2 downto 0) := "000";
+    current_state : in std_logic_vector(2 downto 0) := STATE_0;
     next_state : out std_logic_vector(2 downto 0)
   );
 end entity CTL;
@@ -42,26 +46,70 @@ architecture CTL_arch of CTL is
     OrigPC <= '0';
     EscrevePC <= '1';
     EscrevePCB <= '1';
-    next_state <= "001";
+    next_state <= STATE_1;
   end fetch;
 
   procedure decode(
     signal ULAop : out std_logic_vector(6 downto 0);
+    signal EscrevePCB, EscrevePC, EscreveIR : out std_logic;
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
   ) is
   begin
     OrigULA_A <= "10";
     OrigULA_B <= "11";
+    EscrevePC <= '0';
+    EscrevePCB <= '0';
+    EscreveIR <= '0';
     ULAop <= R_TYPE;
-    next_state <= "010";
+    next_state <= STATE_2;
   end decode;
+
+  procedure ex_R_type(
+    signal ULAop : out std_logic_vector(6 downto 0);
+    signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    OrigULA_A <= "00";
+    OrigULA_B <= "00";
+    ULAop <= R_TYPE;
+    next_state <= STATE_3;
+  end ex_R_type;
+
+  procedure ex_I_type(
+    signal ULAop : out std_logic_vector(6 downto 0);
+    signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    OrigULA_A <= "00";
+    OrigULA_B <= "10";
+    ULAop <= I_TYPE;
+    next_state <= STATE_3;
+  end ex_I_type;
+
+  -- procedure wb_R_type(
+  --   signal EscrevePCB, EscrevePC, EscreveIR : out std_logic;
+  --   signal next_state : out std_logic_vector(2 downto 0)
+  -- ) is
+  -- begin
+  --   OrigULA_A <= "00";
+  --   OrigULA_B <= "10";
+  --   EscrevePC <= '0';
+  --   EscrevePCB <= '0';
+  --   EscreveIR <= '0';
+  --   ULAop <= I_TYPE;
+  --   next_state <= STATE_3;
+  -- end ex_I_type;
+
 
 begin
   process(current_state) is
   begin
     case current_state is
-      when "000" =>
+----------------------------------------------------------
+      when STATE_0 =>
         fetch(
           EscrevePCB => EscrevePCB,
           EscrevePC => EscrevePC,
@@ -74,19 +122,46 @@ begin
           OrigULA_B => OrigULA_B,
           next_state => next_state
         );
-      when "001" =>
+----------------------------------------------------------
+      when STATE_1 =>
         decode(
+          EscreveIR => EscreveIR,
+          EscrevePCB => EscrevePCB,
+          EscrevePC => EscrevePC,
           ULAop => ULAop,
           OrigULA_A => OrigULA_A,
           OrigULA_B => OrigULA_B,
           next_state => next_state
         );
+----------------------------------------------------------
+      when STATE_2 =>
+        case opcode is
+          when R_TYPE =>
+            ex_R_type(
+              ULAop => ULAop,
+              OrigULA_A => OrigULA_A,
+              OrigULA_B => OrigULA_B,
+              next_state => next_state
+            );
+          when I_TYPE =>
+            ex_I_type(
+              ULAop => ULAop,
+              OrigULA_A => OrigULA_A,
+              OrigULA_B => OrigULA_B,
+              next_state => next_state
+            );
+          when others => NULL;
+        end case;
+        next_state <= STATE_0;
+----------------------------------------------------------
+      -- when STATE_3 =>
+      --   case opcode is
+      --     when R_TYPE =>
+      --       wb_R_type(
+      --       );
+      --   end case;
+----------------------------------------------------------
       when others => NULL;
-     -- when "001" => decode();
-     -- when "010" => do();
-     -- when "011" => do_2();
-     -- when "100" => ultimo();
     end case;
   end process;
-
 end CTL_arch;

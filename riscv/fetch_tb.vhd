@@ -27,7 +27,7 @@ architecture testbench of fetch_tb is
   signal opcode : std_logic_vector(6 downto 0) := R_TYPE;
   signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
   signal LeMem : std_logic;
-  signal EscreveIR : std_logic := '1';
+  signal EscreveIR : std_logic;
   signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
   signal ULAop : std_logic_vector(6 downto 0);
   signal current_state : std_logic_vector(2 downto 0) := "000";
@@ -113,6 +113,8 @@ begin
       EscrevePC => EscrevePC,
       IouD => IouD,
       OrigPC => OrigPC,
+      Mem2Reg => open,
+      EscreveReg => open,
       LeMem => LeMem,
       EscreveIR => EscreveIR,
       OrigULA_A => OrigULA_A,
@@ -154,7 +156,7 @@ begin
     assert(ula_Z = x"00000008") report "!===========ERROR FETCH (C)===========!" severity error;
     assert(pc_out = x"00000004") report "!===========ERROR FETCH (D)===========!" severity error;
     assert(pcb_out = x"00000000") report "!===========ERROR FETCH (E)===========!" severity error;
-    assert(ir_out = x"fafef1f0") report "!===========ERROR IR (E)===========!" severity error;
+    assert(ir_out = x"FFF50A93") report "!===========ERROR IR (E)===========!" severity error;
     assert(next_state = "001") report "!===========ERROR FETCH (NEXT_STATE)===========!" severity error;
     wait for T;
 

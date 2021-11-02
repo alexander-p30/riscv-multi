@@ -14,10 +14,12 @@ architecture testbench of CTL_tb is
     signal EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
     signal LeMem : std_logic;
     signal EscreveIR : std_logic;
+    signal EscreveReg : std_logic;
     signal OrigULA_A, OrigULA_B : std_logic_vector(1 downto 0);
     signal ULAop : std_logic_vector(6 downto 0);
-    signal current_state : std_logic_vector(2 downto 0) := "000";
-    signal next_state : std_logic_vector(2 downto 0) := "000";
+    signal current_state : std_logic_vector(2 downto 0) := STATE_0;
+    signal next_state : std_logic_vector(2 downto 0) := STATE_0;
+    signal Mem2Reg : std_logic_vector(1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   e_ctl: CTL port map(
@@ -26,6 +28,8 @@ begin
     EscrevePC => EscrevePC,
     IouD => IouD,
     OrigPC => OrigPC,
+    Mem2Reg => Mem2Reg,
+    EscreveReg => EscreveReg,
     LeMem => LeMem,
     EscreveIR => EscreveIR,
     OrigULA_A => OrigULA_A,
@@ -44,8 +48,8 @@ begin
   process is
   begin
     wait for T/4;
-    assert(current_state = "000") report "==========ERROR FETCH (0)==========" severity error;
-    assert(next_state = "001") report "==========ERROR FETCH (A)==========" severity error;
+    assert(current_state = STATE_0) report "==========ERROR FETCH (0)==========" severity error;
+    assert(next_state = STATE_1) report "==========ERROR FETCH (A)==========" severity error;
     assert(IouD = '0') report "===========ERROR FETCH (B)===========" severity error;
     assert(LeMem = '1') report "===========ERROR FETCH (C)===========" severity error;
     assert(EscreveIR = '1') report "===========ERROR FETCH (D)===========" severity error;
@@ -57,7 +61,7 @@ begin
     assert(EscrevePCB = '1') report "===========ERROR FETCH (J)===========" severity error;
     wait for T;
 
-    assert(current_state = "001") report "==========ERROR DECODE (0)==========" severity error;
+    assert(current_state = STATE_1) report "==========ERROR DECODE (0)==========" severity error;
     assert(next_state = "010") report "==========ERROR DECODE (A)==========" severity error;
     assert(OrigULA_A = "10") report "===========ERROR DECODE (E)===========" severity error;
     assert(OrigULA_B = "11") report "===========ERROR DECODE (F)===========" severity error;

@@ -31,16 +31,9 @@ begin
     we <= '1';
     datain <= x"FFFFFFFF";
     address <= "11111111";
-    wait for T/2;
+    wait for T;
     assert (dataout = x"FFFFFFFF") report "!============ERROR SYNC (A)============!";
     we <= '0';
-
-    for i in 0 to 255 loop
-      address <= std_logic_vector(to_unsigned(i,8));
-      datain <= std_logic_vector(to_unsigned(i,30)) & "00";
-      wait for T/4;
-      report to_hstring(dataout);
-    end loop;
 
     ongoing_test <= '0';
     wait;

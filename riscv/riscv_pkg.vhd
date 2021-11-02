@@ -19,6 +19,13 @@ package riscv_pkg is
   constant U_2_TYPE : std_logic_vector(6 downto 0) := "0010111";
   constant S_TYPE : std_logic_vector(6 downto 0) := "0100011";
 
+  -- machine state
+  constant STATE_0 : std_logic_vector(2 downto 0) := "000";
+  constant STATE_1 : std_logic_vector(2 downto 0) := "001";
+  constant STATE_2 : std_logic_vector(2 downto 0) := "010";
+  constant STATE_3 : std_logic_vector(2 downto 0) := "011";
+  constant STATE_4 : std_logic_vector(2 downto 0) := "100";
+
   -- components
   component GENERIC_REG is
     port (
@@ -101,6 +108,8 @@ package riscv_pkg is
     port (
       opcode : in std_logic_vector(6 downto 0);
       EscrevePCB, EscrevePC, IouD, OrigPC : out std_logic;
+      Mem2Reg : out std_logic_vector(1 downto 0);
+      EscreveReg : out std_logic;
       LeMem : out std_logic;
       EscreveIR : out std_logic;
       OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
