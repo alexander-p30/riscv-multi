@@ -100,7 +100,7 @@ begin
   e_mem : MEM_RV port map(
     clk => clk,
     we => EscreveMEM,
-    address => mem_address(10 downto 0),
+    address => mem_address(11 downto 0),
     datain => reg_B_out,
     dataout => ir_in
   );

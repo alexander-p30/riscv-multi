@@ -39,12 +39,12 @@ architecture testbench of fetch_tb is
   -- MEM
   signal x_mem_address : std_logic_vector(WSIZE-1 downto 0);
   signal mem_we : std_logic;
-  signal mem_address : std_logic_vector(10 downto 0);
+  signal mem_address : std_logic_vector(11 downto 0);
   signal mem_datain : std_logic_vector(WSIZE-1 downto 0);
   signal mem_dataout : std_logic_vector(WSIZE-1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
-  mem_address <= x_mem_address(10 downto 0);
+  mem_address <= x_mem_address(11 downto 0);
   mem_we <= not LeMem;
 
   e_reg: GENERIC_REG port map(

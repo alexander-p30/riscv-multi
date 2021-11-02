@@ -20,13 +20,25 @@ architecture RTL of MEM_RV is
   signal read_address : std_logic_vector(address'range);
 
   impure function init_ram_hex return mem_type is
-    file text_file : text open read_mode is "hex.txt";
-    variable text_line : line;
+    file text_file : text open read_mode is "text_hex.txt";
+    file data_file : text open read_mode is "data_hex.txt";
+    variable current_line : line;
     variable mem_content : mem_type;
+    variable i : integer := 0;
   begin
-    for i in 0 to (2**address'length)-1 loop
-      readline(text_file, text_line);
-      hread(text_line, mem_content(i));
+
+    while not endfile(text_file) loop
+      readline(text_file, current_line);
+      hread(current_line, mem_content(i));
+      i := i + 1;
+    end loop;
+
+    i := 2047;
+
+    while not endfile(data_file) loop
+      readline(data_file, current_line);
+      hread(current_line, mem_content(i));
+      i := i + 1;
     end loop;
 
     return mem_content;

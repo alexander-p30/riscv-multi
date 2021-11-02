@@ -10,7 +10,7 @@ end MEM_RV_tb;
 architecture testbench of MEM_RV_tb is
   signal clk : std_logic := '0';
   signal we : std_logic := '0';
-  signal address : std_logic_vector(7 downto 0);
+  signal address : std_logic_vector(11 downto 0);
   signal datain : std_logic_vector(WSIZE-1 downto 0);
   signal dataout : std_logic_vector(WSIZE-1 downto 0);
 
@@ -30,7 +30,7 @@ begin
   begin
     we <= '1';
     datain <= x"FFFFFFFF";
-    address <= "11111111";
+    address <= "111111111111";
     wait for T;
     assert (dataout = x"FFFFFFFF") report "!============ERROR SYNC (A)============!";
     we <= '0';

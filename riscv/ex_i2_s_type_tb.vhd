@@ -99,7 +99,7 @@ begin
   e_mem : MEM_RV port map(
     clk => clk,
     we => EscreveMEM,
-    address => mem_address(10 downto 0),
+    address => mem_address(11 downto 0),
     datain => reg_B_out,
     dataout => ir_in
   );
@@ -248,7 +248,7 @@ begin
     -- lw t1, 0(zero)
     assert(ir_in = x"00002303") report "!===========ERROR 2 FETCH (1)===========!" severity error;
 
-    wait for T; -- end fetch
+    wait for 3*T/4; -- end fetch
 
     assert(gen_imm_out = x"00000000") report "!===========ERROR 2 DECODE (1)===========!" severity error;
     assert(ir_out = x"00002303") report "!===========ERROR 2 DECODE (2)===========!" severity error;
