@@ -11,7 +11,7 @@ architecture testbench of CTL_tb is
     signal clk : std_logic := '0';
     signal ongoing_test : std_logic := '1';
 
-    signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+    signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC, Branch : std_logic;
     signal LeMem : std_logic;
     signal EscreveIR : std_logic;
     signal EscreveReg : std_logic;
@@ -29,6 +29,7 @@ begin
     EscrevePC => EscrevePC,
     IouD => IouD,
     OrigPC => OrigPC,
+    Branch => Branch,
     Mem2Reg => Mem2Reg,
     EscreveReg => EscreveReg,
     LeMem => LeMem,
