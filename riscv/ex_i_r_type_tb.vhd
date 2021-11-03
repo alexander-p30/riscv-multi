@@ -29,7 +29,7 @@ architecture testbench of ex_i_r_type_tb is
 
   -- CTL
   signal opcode : std_logic_vector(6 downto 0);
-  signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC : std_logic;
+  signal EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC, Branch : std_logic;
   signal LeMem : std_logic;
   signal EscreveIR : std_logic;
   signal EscreveReg : std_logic;
@@ -137,6 +137,7 @@ begin
       EscrevePC => EscrevePC,
       IouD => IouD,
       OrigPC => OrigPC,
+      Branch => Branch,
       Mem2Reg => Mem2Reg,
       EscreveReg => EscreveReg,
       LeMem => LeMem,

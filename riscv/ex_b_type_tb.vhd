@@ -4,10 +4,10 @@ use ieee.numeric_std.all;
 
 use work.riscv_pkg.all;
 
-entity ex_i2_s_type_tb is
-end ex_i2_s_type_tb;
+entity ex_b_type_tb is
+end ex_b_type_tb;
 
-architecture testbench of ex_i2_s_type_tb is
+architecture testbench of ex_b_type_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 
@@ -16,6 +16,7 @@ architecture testbench of ex_i2_s_type_tb is
   signal ir_in : std_logic_vector(WSIZE-1 downto 0);
 
   -- PC/PCBack
+  signal pc_we : std_logic;
   signal pc_in: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal pc_out, pcb_out: std_logic_vector(WSIZE-1 downto 0) := (others => '0');
 
@@ -23,6 +24,7 @@ architecture testbench of ex_i2_s_type_tb is
   signal mem_address : std_logic_vector(WSIZE-1 downto 0);
 
   -- ULA
+  signal ula_cond : std_logic;
   signal ula_A, ula_B : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal ula_Z : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
 
@@ -58,8 +60,9 @@ architecture testbench of ex_i2_s_type_tb is
   signal data_reg_out : std_logic_vector(WSIZE-1 downto 0);
 begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
-  aux_gen_imm_out <= std_logic_vector(signed(gen_imm_out) sll 1);
+  aux_gen_imm_out <= std_logic_vector(shift_left(gen_imm_out, 0));
   opcode <= ir_out(6 downto 0);
+  pc_we <= EscrevePC or (Branch and ula_cond);
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
@@ -70,7 +73,7 @@ begin
 
   e_pc: PC port map(
     clk => clk,
-    we => EscrevePC,
+    we => pc_we,
     pc_in => pc_in,
     pc_out => pc_out
   );
@@ -109,7 +112,7 @@ begin
     A => ula_A,
     B => ula_B,
     Z => ula_Z,
-    cond => open
+    cond => ula_cond
   );
 
   mux_ula_a : MUX3 port map(
@@ -217,71 +220,51 @@ begin
 
   process is
    begin
-    wait for 24*T;
-    -- sw t0, 0(zero)
-    assert(ir_in = x"00502023") report "!===========ERROR FETCH (1)===========!" severity error;
+    wait for 33*T;
+    -- beq t0, zero, beq_fail
+    wait for T/4;
+    assert(ir_in = x"02028463") report "!===========ERROR FETCH (1)===========!" severity error;
 
-    wait for T; -- end fetch
+    wait for 3*T/4; -- end fetch
 
-    assert(gen_imm_out = x"00000000") report "!===========ERROR DECODE (1)===========!" severity error;
-    assert(ir_out = x"00502023") report "!===========ERROR DECODE (2)===========!" severity error;
-    assert(aux_gen_imm_out = x"00000000") report "!===========ERROR DECODE (3)===========!" severity error;
+    assert(ir_out = x"02028463") report "!===========ERROR DECODE (1)===========!" severity error;
     assert(next_state = "010") report "!===========ERROR DECODE (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end decode
 
-    assert(ula_A = x"00000000") report "!===========ERROR EX_S (1)===========!" severity error;
+    assert(ula_A = x"00000190") report "!===========ERROR EX_S (1)===========!" severity error;
     assert(ula_B = x"00000000") report "!===========ERROR EX_S (2)===========!" severity error;
-    assert(ula_Z = x"00000000") report "!===========ERROR EX_S (3)===========!" severity error;
-    assert(reg_ULA_Z_out /= ula_Z) report "!===========ERROR EX_S (4)===========!" severity error;
-    assert(next_state = "011") report "!===========ERROR EX_S (NEXT_STATE)===========!" severity error;
+    assert(ula_cond = '0') report "!===========ERROR EX_S (3)===========!" severity error;
+    assert(Branch = '1') report "!===========ERROR EX_S (4)===========!" severity error;
+    assert(next_state = "000") report "!===========ERROR EX_S (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end execute
-
-    assert(reg_ULA_Z_out = x"00000000") report "!===========ERROR WB_S (1)===========!" severity error;
-    assert(IouD = '1') report "!===========ERROR WB_S (2)===========!" severity error;
-    assert(mem_address = x"00000000") report "!===========ERROR WB_S (3)===========!" severity error;
-    assert(reg_B_out = x"00000190") report "!===========ERROR WB_S (4)===========!" severity error;
-    assert(next_state = "000") report "!===========ERROR WB_S (NEXT_STATE)===========!" severity error;
-
-    wait for 5*T/4; -- end write back (ir_in not settled yet, so 5T/4 necessary FOR TESTING)
     ---------------------------------------- END FIRST INSTRUCTION
-    -- lw t1, 0(zero)
-    assert(ir_in = x"00002303") report "!===========ERROR 2 FETCH (1)===========!" severity error;
+    -- beq t0, t1, beq_success
+    wait for T/4;
+    assert(ir_in = x"02628063") report "!===========ERROR 2 FETCH (1)===========!" severity error;
 
     wait for 3*T/4; -- end fetch
 
-    assert(gen_imm_out = x"00000000") report "!===========ERROR 2 DECODE (1)===========!" severity error;
-    assert(ir_out = x"00002303") report "!===========ERROR 2 DECODE (2)===========!" severity error;
-    assert(aux_gen_imm_out = x"00000000") report "!===========ERROR 2 DECODE (3)===========!" severity error;
+    assert(ir_out = x"02628063") report "!===========ERROR 2 DECODE (1)===========!" severity error;
     assert(next_state = "010") report "!===========ERROR 2 DECODE (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end decode
 
-    assert(ula_A = x"00000000") report "!===========ERROR 2 EX_I (1)===========!" severity error;
-    assert(ula_B = x"00000000") report "!===========ERROR 2 EX_I (2)===========!" severity error;
-    assert(ula_Z = x"00000000") report "!===========ERROR 2 EX_I (3)===========!" severity error;
-    assert(next_state = "011") report "!===========ERROR 2 EX_I (NEXT_STATE)===========!" severity error;
+    assert(ula_A = x"00000190") report "!===========ERROR 2 EX_S (1)===========!" severity error;
+    assert(ula_B = x"00000190") report "!===========ERROR 2 EX_S (2)===========!" severity error;
+    assert(ula_cond = '1') report "!===========ERROR 2 EX_S (3)===========!" severity error;
+    assert(Branch = '1') report "!===========ERROR 2 EX_S (4)===========!" severity error;
+    assert(next_state = "000") report "!===========ERROR 2 EX_S (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end execute
-
-    assert(reg_ULA_Z_out = x"00000000") report "!===========ERROR 2 WB_I (1)===========!" severity error;
-    assert(IouD = '1') report "!===========ERROR 2 WB_I (2)===========!" severity error;
-    assert(mem_address = x"00000000") report "!===========ERROR 2 WB_I (3)===========!" severity error;
-    assert(LeMem = '1') report "!===========ERROR 2 WB_I (4)===========!" severity error;
-    assert(EscreveMEM = '0') report "!===========ERROR 2 WB_I (5)===========!" severity error;
-    assert(next_state = "100") report "!===========ERROR 2 WB_I (NEXT_STATE)===========!" severity error;
-
-    wait for T; -- end write back
-
-    assert(ir_out(11 downto 7) = "00110") report "!===========ERROR 2 WB_FINAL_I (1)===========!" severity error;
-    assert(xregs_datain = x"00000190") report "!===========ERROR 2 WB_FINAL_I (2)===========!" severity error;
-    assert(EscreveReg = '1') report "!===========ERROR 2 WB_FINAL_I (3)===========!" severity error;
-    assert(EscreveMEM = '0') report "!===========ERROR 2 WB_FINAL_I (5)===========!" severity error;
-    assert(next_state = "000") report "!===========ERROR 2 WB_FINAL_I (NEXT_STATE)===========!" severity error;
-
-    wait for T; -- end write final back
     ---------------------------------------- END SECOND INSTRUCTION
+    -- addi t0, zero, 1
+    wait for T/4;
+    assert(ir_in = x"00100293") report "!===========ERROR 3 FETCH (1)===========!" severity error;
+
+    wait for 3*T/4; -- end fetch
+    ---------------------------------------- END THIRD INSTRUCTION
 
     ongoing_test <= '0';
     wait;
