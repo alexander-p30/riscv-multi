@@ -233,11 +233,11 @@ begin
 
     wait for T; -- end decode
 
-    assert(xregs_datain = pc_out) report "!===========ERROR EX_S (1)===========!" severity error;
-    assert(ir_out(11 downto 7) = "01001") report "!===========ERROR EX_S (2)===========!" severity error;
-    assert(EscrevePC = '1') report "!===========ERROR EX_S (3)===========!" severity error;
-    assert(EscreveReg = '1') report "!===========ERROR EX_S (4)===========!" severity error;
-    assert(next_state = "000") report "!===========ERROR EX_S (NEXT_STATE)===========!" severity error;
+    assert(xregs_datain = pc_out) report "!===========ERROR EX_J (1)===========!" severity error;
+    assert(ir_out(11 downto 7) = "01001") report "!===========ERROR EX_J (2)===========!" severity error;
+    assert(EscrevePC = '1') report "!===========ERROR EX_J (3)===========!" severity error;
+    assert(EscreveReg = '1') report "!===========ERROR EX_J (4)===========!" severity error;
+    assert(next_state = "000") report "!===========ERROR EX_J (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end execute
     ---------------------------------------- END FIRST INSTRUCTION

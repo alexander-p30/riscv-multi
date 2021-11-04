@@ -4,10 +4,10 @@ use ieee.numeric_std.all;
 
 use work.riscv_pkg.all;
 
-entity ex_b_type_tb is
-end ex_b_type_tb;
+entity complete_tb is
+end complete_tb;
 
-architecture testbench of ex_b_type_tb is
+architecture testbench of complete_tb is
   signal clk: std_logic := '0';
   signal ongoing_test: std_logic := '1';
 
@@ -220,39 +220,41 @@ begin
 
   process is
    begin
-    wait for 33*T;
-    -- beq t0, zero, beq_fail
+    wait for 54*T;
+    -- bne t0, t1, bne_fail
     wait for T/4;
-    assert(ir_in = x"00028a63") report "!===========ERROR FETCH (1)===========!" severity error;
+
+    assert(ir_in = x"00629463") report "!===========ERROR FETCH (1)===========!" severity error;
 
     wait for 3*T/4; -- end fetch
 
-    assert(ir_out = x"00028a63") report "!===========ERROR DECODE (1)===========!" severity error;
+    assert(ir_out = x"00629463") report "!===========ERROR DECODE (1)===========!" severity error;
     assert(next_state = "010") report "!===========ERROR DECODE (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end decode
 
-    assert(ula_A = x"00000190") report "!===========ERROR EX_B (1)===========!" severity error;
-    assert(ula_B = x"00000000") report "!===========ERROR EX_B (2)===========!" severity error;
+    assert(ula_A = x"0000007b") report "!===========ERROR EX_B (1)===========!" severity error;
+    assert(ula_B = x"0000007b") report "!===========ERROR EX_B (2)===========!" severity error;
     assert(ula_cond = '0') report "!===========ERROR EX_B (3)===========!" severity error;
     assert(Branch = '1') report "!===========ERROR EX_B (4)===========!" severity error;
     assert(next_state = "000") report "!===========ERROR EX_B (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end execute
     ---------------------------------------- END FIRST INSTRUCTION
-    -- beq t0, t1, beq_success
+    -- bne t0, zero, bne_success
     wait for T/4;
-    assert(ir_in = x"00628463") report "!===========ERROR 2 FETCH (1)===========!" severity error;
+
+    assert(ir_in = x"00029463") report "!===========ERROR 2 FETCH (1)===========!" severity error;
 
     wait for 3*T/4; -- end fetch
 
-    assert(ir_out = x"00628463") report "!===========ERROR 2 DECODE (1)===========!" severity error;
+    assert(ir_out = x"00029463") report "!===========ERROR 2 DECODE (1)===========!" severity error;
     assert(next_state = "010") report "!===========ERROR 2 DECODE (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end decode
 
-    assert(ula_A = x"00000190") report "!===========ERROR 2 EX_B (1)===========!" severity error;
-    assert(ula_B = x"00000190") report "!===========ERROR 2 EX_B (2)===========!" severity error;
+    assert(ula_A = x"0000007b") report "!===========ERROR 2 EX_B (1)===========!" severity error;
+    assert(ula_B = x"00000000") report "!===========ERROR 2 EX_B (2)===========!" severity error;
     assert(ula_cond = '1') report "!===========ERROR 2 EX_B (3)===========!" severity error;
     assert(Branch = '1') report "!===========ERROR 2 EX_B (4)===========!" severity error;
     assert(next_state = "000") report "!===========ERROR 2 EX_B (NEXT_STATE)===========!" severity error;
@@ -263,8 +265,22 @@ begin
     wait for T/4;
     assert(ir_in = x"00100293") report "!===========ERROR 3 FETCH (1)===========!" severity error;
 
-    wait for 3*T/4; -- end fetch
+    wait for 3*T/4 + T*3;
     ---------------------------------------- END THIRD INSTRUCTION
+    wait for T/4;
+
+    assert(ir_in = x"0022b2b7") report "!===========ERROR 3 FETCH (1)===========!" severity error;
+
+    wait for 3*T/4; -- end fetch
+
+    assert(ir_out = x"0022b2b7") report "!===========ERROR 3 DECODE (1)===========!" severity error;
+    assert(next_state = "010") report "!===========ERROR 3 DECODE (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end decode
+
+    assert(ula_A = x"00000014") report "!===========ERROR 3 EX_U (1)===========!" severity error;
+    assert(ula_B = x"0000022B") report "!===========ERROR 3 EX_U (2)===========!" severity error;
+    assert(ula_Z = x"22B00000") report "!===========ERROR 3 EX_U (3)===========!" severity error;
 
     ongoing_test <= '0';
     wait;

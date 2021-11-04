@@ -20,3 +20,15 @@ beq_fail:
 	
 test_jal:
 	addi t0, zero, 123
+	addi t1, zero, 123
+	bne t0, t1, bne_fail
+	bne t0, zero, bne_success
+	
+bne_fail:
+	addi t0, zero, 0
+
+bne_success:
+	addi t0, zero, 1
+	lui t0, 555
+	auipc t1, 4
+	

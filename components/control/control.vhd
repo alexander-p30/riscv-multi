@@ -133,6 +133,18 @@ architecture CTL_arch of CTL is
     next_state <= STATE_0;
   end ex_JAL;
 
+  procedure ex_U_type(
+    signal ULAop : out std_logic_vector(6 downto 0);
+    signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    OrigULA_A <= "00";
+    OrigULA_B <= "00";
+    ULAop <= opcode;
+    next_state <= STATE_0;
+  end ex_U_type;
+
   procedure wb_RI_type(
     signal EscreveReg : out std_logic;
     signal Mem2Reg : out std_logic_vector(1 downto 0);
