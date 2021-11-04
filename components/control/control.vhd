@@ -120,6 +120,19 @@ architecture CTL_arch of CTL is
     next_state <= STATE_0;
   end ex_BEQ;
 
+  procedure ex_JAL(
+    signal Mem2Reg : out std_logic_vector(1 downto 0);
+    signal EscrevePC, EscreveReg, OrigPC : out std_logic;
+    signal next_state : out std_logic_vector(2 downto 0)
+  ) is
+  begin
+    EscrevePC <= '1';
+    EscreveReg <= '1';
+    OrigPC <= '1';
+    Mem2Reg <= "01";
+    next_state <= STATE_0;
+  end ex_JAL;
+
   procedure wb_RI_type(
     signal EscreveReg : out std_logic;
     signal Mem2Reg : out std_logic_vector(1 downto 0);
@@ -227,7 +240,14 @@ begin
                 Branch => Branch,
                 next_state => next_state
               );
-
+          when J_TYPE =>
+              ex_JAL(
+                EscrevePC => EscrevePC,
+                Mem2Reg => Mem2Reg,
+                EscreveReg => EscreveReg,
+                OrigPC => OrigPC,
+                next_state => next_state
+              );
           when others => NULL;
         end case;
 ---------------------------------------------------------- write-back

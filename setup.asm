@@ -9,16 +9,14 @@
 	lw t1, 0(zero)
 	beq t0, zero, beq_fail
 	beq t0, t1, beq_success
-	addi t0, zero, 0
-	addi t0, zero, 0
-	addi t0, zero, 0
-	addi t0, zero, 0
-	addi t0, zero, 0
-	addi t0, zero, 0
-	addi t0, zero, 0
+	addi t0, zero, 2
 	
 beq_success:
 	addi t0, zero, 1
+	jal s1, test_jal
 	
 beq_fail:
 	addi t0, zero, 0
+	
+test_jal:
+	addi t0, zero, 123
