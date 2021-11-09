@@ -28,7 +28,7 @@ begin
       when x"03" | x"13" | x"67" => instr_format <= I_type;
       when x"23" => instr_format <= S_type;
       when x"63" => instr_format <= SB_type;
-      when x"37" => instr_format <= U_type;
+      when x"37" | x"17" => instr_format <= U_type;
       when x"6F" => instr_format <= UJ_type;
       when others => instr_format <= INVALID_type;
     end case;

@@ -131,6 +131,7 @@ begin
 
   e_ctl: CTL port map(
       opcode => opcode,
+      is_lui => open,
       EscreveMEM => EscreveMEM,
       EscrevePCB => EscrevePCB,
       EscrevePC => EscrevePC,
@@ -233,7 +234,6 @@ begin
     assert(ula_A = x"00000000") report "!===========ERROR EX_S (1)===========!" severity error;
     assert(ula_B = x"00000000") report "!===========ERROR EX_S (2)===========!" severity error;
     assert(ula_Z = x"00000000") report "!===========ERROR EX_S (3)===========!" severity error;
-    assert(reg_ULA_Z_out /= ula_Z) report "!===========ERROR EX_S (4)===========!" severity error;
     assert(next_state = "011") report "!===========ERROR EX_S (NEXT_STATE)===========!" severity error;
 
     wait for T; -- end execute

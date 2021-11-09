@@ -24,6 +24,7 @@ begin
   clk <= not clk after T/2 when ongoing_test = '1' else '0';
   e_ctl: CTL port map(
     opcode => "0000000",
+    is_lui => open,
     EscreveMEM => EscreveMEM,
     EscrevePCB => EscrevePCB,
     EscrevePC => EscrevePC,

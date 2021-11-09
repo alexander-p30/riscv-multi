@@ -134,6 +134,7 @@ begin
 
   e_ctl: CTL port map(
       opcode => opcode,
+      is_lui => open,
       EscreveMEM => EscreveMEM,
       EscrevePCB => EscrevePCB,
       EscrevePC => EscrevePC,

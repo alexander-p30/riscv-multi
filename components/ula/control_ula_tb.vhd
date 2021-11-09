@@ -118,7 +118,7 @@ begin
 
     ULAop <= U_TYPE;
     wait for T;
-    assert(op = "0101") report "==========ERROR (N)==========" severity error;
+    assert(op = "0000") report "==========ERROR (N)==========" severity error;
 
     ULAop <= S_TYPE;
     funct3 <= "010";

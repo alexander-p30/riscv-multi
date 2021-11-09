@@ -25,7 +25,7 @@ architecture testbench of complete_tb is
 
   -- ULA
   signal ula_cond : std_logic;
-  signal ula_A, ula_B : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
+  signal ula_A, mux_ula_A_s, ula_B : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
   signal ula_Z : std_logic_vector(WSIZE-1 downto 0) := (others => '0');
 
   -- CTL
@@ -39,6 +39,7 @@ architecture testbench of complete_tb is
   signal current_state : std_logic_vector(2 downto 0) := "000";
   signal next_state : std_logic_vector(2 downto 0);
   signal Mem2Reg : std_logic_vector(1 downto 0);
+  signal is_lui : std_logic;
 
   -- CTL_ULA
   signal ctl_ula_op : std_logic_vector(3 downto 0);
@@ -63,6 +64,7 @@ begin
   aux_gen_imm_out <= std_logic_vector(shift_left(gen_imm_out, 0));
   opcode <= ir_out(6 downto 0);
   pc_we <= EscrevePC or (Branch and ula_cond);
+  ula_A <= ZERO32 when is_lui = '1' else mux_ula_A_s;
 
   mux_pc : MUX2 port map(
     mux_A => ula_Z,
@@ -120,7 +122,7 @@ begin
     mux_B => pc_out,
     mux_C => pcb_out,
     sel => OrigULA_A,
-    mux_out => ula_A
+    mux_out => mux_ula_A_s
   );
 
   mux_ula_b : MUX4 port map(
@@ -134,6 +136,7 @@ begin
 
   e_ctl: CTL port map(
       opcode => opcode,
+      is_lui => is_lui,
       EscreveMEM => EscreveMEM,
       EscrevePCB => EscrevePCB,
       EscrevePC => EscrevePC,
@@ -278,9 +281,47 @@ begin
 
     wait for T; -- end decode
 
-    assert(ula_A = x"00000014") report "!===========ERROR 3 EX_U (1)===========!" severity error;
-    assert(ula_B = x"0000022B") report "!===========ERROR 3 EX_U (2)===========!" severity error;
-    assert(ula_Z = x"22B00000") report "!===========ERROR 3 EX_U (3)===========!" severity error;
+    assert(ula_A = x"00000000") report "!===========ERROR 3 EX_U (1)===========!" severity error;
+    assert(ula_B = x"0022B000") report "!===========ERROR 3 EX_U (2)===========!" severity error;
+    assert(ula_Z = x"0022B000") report "!===========ERROR 3 EX_U (3)===========!" severity error;
+    assert(next_state = "011") report "!===========ERROR 3 EX_U (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end execute
+
+    assert(reg_ULA_Z_out = x"0022B000") report "!===========ERROR 3 WB_U (1)===========!" severity error;
+    assert(Mem2Reg = "00") report "!===========ERROR 3 WB_U (2)===========!" severity error;
+    assert(xregs_datain = reg_ULA_Z_out) report "!===========ERROR 3 WB_U (3)===========!" severity error;
+    assert(ir_out(11 downto 7) = "00101") report "!===========ERROR 3 WB_U (4)===========!" severity error;
+    assert(next_state = "000") report "!===========ERROR 3 WB_U (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end WB
+    ---------------------------------------- END FOURTH INSTRUCTION
+    wait for T/4;
+
+    assert(ir_in = x"00004317") report "!===========ERROR 4 FETCH (1)===========!" severity error;
+
+    wait for 3*T/4; -- end fetch
+
+    assert(ir_out = x"00004317") report "!===========ERROR 4 DECODE (1)===========!" severity error;
+    assert(next_state = "010") report "!===========ERROR 4 DECODE (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end decode
+
+    assert(pc_out = x"00000058") report "!===========ERROR 4 EX_U (0)===========!" severity error;
+    assert(ula_A = x"00000058") report "!===========ERROR 4 EX_U (1)===========!" severity error;
+    assert(ula_B = x"00004000") report "!===========ERROR 4 EX_U (2)===========!" severity error;
+    assert(ula_Z = x"00004058") report "!===========ERROR 4 EX_U (3)===========!" severity error;
+    assert(next_state = "011") report "!===========ERROR 4 EX_U (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end execute
+
+    assert(reg_ULA_Z_out = x"00004058") report "!===========ERROR 4 WB_U (1)===========!" severity error;
+    assert(Mem2Reg = "00") report "!===========ERROR 4 WB_U (2)===========!" severity error;
+    assert(xregs_datain = reg_ULA_Z_out) report "!===========ERROR 4 WB_U (3)===========!" severity error;
+    assert(ir_out(11 downto 7) = "00110") report "!===========ERROR 4 WB_U (4)===========!" severity error;
+    assert(next_state = "000") report "!===========ERROR 4 WB_U (NEXT_STATE)===========!" severity error;
+
+    wait for T; -- end WB
 
     ongoing_test <= '0';
     wait;

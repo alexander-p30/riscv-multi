@@ -9,7 +9,7 @@ entity CTL is
     opcode : in std_logic_vector(6 downto 0);
 
     -- PC
-    EscrevePCB, EscrevePC, IouD, OrigPC, Branch : out std_logic;
+    EscrevePCB, EscrevePC, IouD, OrigPC, Branch, is_lui : out std_logic;
 
     -- XREGS
     Mem2Reg : out std_logic_vector(1 downto 0);
@@ -32,13 +32,14 @@ end entity CTL;
 
 architecture CTL_arch of CTL is
   procedure fetch(
-    signal EscreveMEM, EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem, EscreveReg : out std_logic;
+    signal EscreveMEM, EscrevePCB, EscrevePC, EscreveIR, IouD, OrigPC, LeMem, EscreveReg, is_lui : out std_logic;
     signal ULAop : out std_logic_vector(6 downto 0);
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
   ) is
   begin
     IouD <= '0';
+    is_lui <= '0';
     LeMem <= '1';
     EscreveMEM <= '0';
     EscreveIR <= '1';
@@ -134,27 +135,30 @@ architecture CTL_arch of CTL is
   end ex_JAL;
 
   procedure ex_U_type(
+    signal is_lui : out std_logic;
     signal ULAop : out std_logic_vector(6 downto 0);
     signal OrigULA_A, OrigULA_B : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
   ) is
   begin
-    OrigULA_A <= "00";
-    OrigULA_B <= "00";
+    if opcode = "0110111" then is_lui <= '1'; else is_lui <= '0'; end if;
+    OrigULA_A <= "01";
+    OrigULA_B <= "10";
     ULAop <= opcode;
-    next_state <= STATE_0;
+    next_state <= STATE_3;
   end ex_U_type;
 
-  procedure wb_RI_type(
-    signal EscreveReg : out std_logic;
+  procedure wb_RIU_type(
+    signal EscreveReg, is_lui : out std_logic;
     signal Mem2Reg : out std_logic_vector(1 downto 0);
     signal next_state : out std_logic_vector(2 downto 0)
   ) is
   begin
+    is_lui <= '0';
     EscreveReg <= '1';
     Mem2Reg <= "00";
     next_state <= STATE_0;
-  end wb_RI_type;
+  end wb_RIU_type;
 
   procedure wb_S_I2_type(
     signal EscreveMEM, LeMem, IouD : out std_logic;
@@ -195,6 +199,7 @@ begin
       when STATE_0 =>
         fetch(
           EscreveMEM => EscreveMEM,
+          is_lui => is_lui,
           EscreveReg => EscreveReg,
           EscrevePCB => EscrevePCB,
           EscrevePC => EscrevePC,
@@ -260,13 +265,22 @@ begin
                 OrigPC => OrigPC,
                 next_state => next_state
               );
+          when  U_TYPE | U_2_TYPE =>
+            ex_U_type(
+              is_lui => is_lui,
+              ULAop => ULAop,
+              OrigULA_A=> OrigULA_A,
+              OrigULA_B=> OrigULA_B,
+              next_state => next_state
+            );
           when others => NULL;
         end case;
 ---------------------------------------------------------- write-back
       when STATE_3 =>
         case opcode is
-          when R_TYPE | I_TYPE =>
-            wb_RI_type(
+          when R_TYPE | I_TYPE | U_TYPE | U_2_TYPE =>
+            wb_RIU_type(
+              is_lui => is_lui,
               EscreveReg => EscreveReg,
               Mem2Reg => Mem2Reg,
               next_state => next_state

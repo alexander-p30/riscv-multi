@@ -48,7 +48,7 @@ architecture CTL_ULA_arch of CTL_ULA is
 
     case ULAop is
       when J_TYPE =>                      op <= "0000"; -- jal
-      when U_TYPE =>                      op <= "0101"; -- lui
+      when U_TYPE =>                      op <= "0000"; -- lui
       when others =>                      NULL;
     end case;
   end translate_to_ula_opcode;

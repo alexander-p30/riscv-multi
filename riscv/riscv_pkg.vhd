@@ -107,7 +107,7 @@ package riscv_pkg is
   component CTL is
     port (
       opcode : in std_logic_vector(6 downto 0);
-      EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC, Branch : out std_logic;
+      EscreveMEM, EscrevePCB, EscrevePC, IouD, OrigPC, Branch, is_lui : out std_logic;
       Mem2Reg : out std_logic_vector(1 downto 0);
       EscreveReg : out std_logic;
       LeMem : out std_logic;
